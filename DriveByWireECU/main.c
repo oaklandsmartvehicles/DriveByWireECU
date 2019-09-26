@@ -33,6 +33,10 @@
 
 #include "atmel_start.h"
 #include "lwip_socket_api.h"
+#include "hal_gpio.h"
+#include "hal_delay.h"
+#include "DriveByWireIO.h"
+
 
 /* define to avoid compilation warning */
 #define LWIP_TIMEVAL_PRIVATE 0
@@ -61,6 +65,21 @@ void print_ipaddress(void)
  *
  */
 
+ unsigned long long GetCurrentTime()
+ {
+	//TODO: Implement mechanism to count time from clock ticks or timer or RTC, or something idk
+ }
+
+ void ProcessAlgorithms(unsigned long long microseconds_elapsed, dbw_inputs* inputs)
+ {
+	//Calculate new outputs etc. Call SetBlah()...
+	//If an some output is complicated. i.e. something like a PID controller, make a new function or .c/.h file.
+
+	SetReverseDrive(inputs->reverse_commanded);
+
+	return;
+ }
+
 int main(void)
 {
 	/* Initializes MCU, drivers and middleware */
@@ -70,8 +89,26 @@ int main(void)
 	printf("\r\nSocket API implementation\r\n");
 	basic_socket();
 
-	while (1)
-		;
+	int keep_running = 1;
+	unsigned long long current_time_us;
+	dbw_inputs* inputs = NULL;
+	while (keep_running)
+	{
+		//TODO: Calculate time elapsed in microseconds since last loop start
+		current_time_us = GetCurrentTime();
 
+		ProcessCurrentInputs(current_time_us);
+
+		inputs = GetCurrentInputs();
+
+		ProcessAlgorithms(current_time_us);
+
+		ProcessCurrentOutputs(current_time_us);
+
+		SendUpdateToPC();
+
+		//arbitrary throttling of main loop. 
+		delay_us(100);
+	}
 	return 0;
 }
