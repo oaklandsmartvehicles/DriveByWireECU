@@ -748,6 +748,9 @@
     <Compile Include="Device_Startup\system_same54.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="DriveByWireIO.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="driver_init.c">
       <SubType>compile</SubType>
     </Compile>
