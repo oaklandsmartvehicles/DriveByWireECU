@@ -10,6 +10,7 @@
 #include <peripheral_clk_config.h>
 #include <utils.h>
 #include <hal_init.h>
+#include <hal_usart_sync.h>
 
 #include <hpl_adc_base.h>
 
@@ -23,24 +24,23 @@ struct mac_async_descriptor COMMUNICATION_IO;
 
 void ADC_0_PORT_init(void)
 {
-
 	// Disable digital pin circuitry
-	gpio_set_pin_direction(PA02, GPIO_DIRECTION_OFF);
-
-	gpio_set_pin_function(PA02, PINMUX_PA02B_ADC0_AIN0);
+	gpio_set_pin_direction(SteeringPosition, GPIO_DIRECTION_OFF);
+	gpio_set_pin_function(SteeringPosition, PINMUX_PB08B_ADC1_AIN0);
 }
 
 void ADC_0_CLOCK_init(void)
 {
-	hri_mclk_set_APBDMASK_ADC0_bit(MCLK);
-	hri_gclk_write_PCHCTRL_reg(GCLK, ADC0_GCLK_ID, CONF_GCLK_ADC0_SRC | (1 << GCLK_PCHCTRL_CHEN_Pos));
+	hri_mclk_set_APBDMASK_ADC1_bit(MCLK);
+	hri_gclk_write_PCHCTRL_reg(GCLK, ADC1_GCLK_ID, CONF_GCLK_ADC1_SRC | (1 << GCLK_PCHCTRL_CHEN_Pos));
 }
 
 void ADC_0_init(void)
 {
 	ADC_0_CLOCK_init();
 	ADC_0_PORT_init();
-	adc_sync_init(&ADC_0, ADC0, (void *)NULL);
+	adc_sync_init(&ADC_0, ADC1, (void *)NULL);
+	adc_sync_enable_channel(&ADC_0, 0);
 }
 
 void TARGET_IO_PORT_init(void)

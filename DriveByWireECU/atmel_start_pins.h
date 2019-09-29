@@ -27,7 +27,6 @@
 #define GPIO_PIN_FUNCTION_M 12
 #define GPIO_PIN_FUNCTION_N 13
 
-#define PA02 GPIO(GPIO_PORTA, 2)
 #define SteerLeft GPIO(GPIO_PORTA, 6)
 #define SteerRight GPIO(GPIO_PORTA, 7)
 #define PA12 GPIO(GPIO_PORTA, 12)
@@ -42,6 +41,7 @@
 #define SafetyLights2Mode GPIO(GPIO_PORTB, 1)
 #define SafetyLights2On GPIO(GPIO_PORTB, 6)
 #define WheelSpeed2 GPIO(GPIO_PORTB, 7)
+#define SteeringPosition GPIO(GPIO_PORTB, 8)
 #define PB12 GPIO(GPIO_PORTB, 12)
 #define PB13 GPIO(GPIO_PORTB, 13)
 #define PB24 GPIO(GPIO_PORTB, 24)

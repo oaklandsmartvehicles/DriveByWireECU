@@ -9,9 +9,10 @@
 #ifndef DRIVEBYWIREIO_H_
 #define DRIVEBYWIREIO_H_
 
-typedef struct dbw_inputs{
+typedef struct dbw_inputs_t{
 	float wheel_speed_left;
 	float wheel_speed_right;
+	float steering_position;
 
 	//commanded values from driving agent rx'd over Ethernet
 	float vehicle_speed_commanded;
@@ -20,7 +21,7 @@ typedef struct dbw_inputs{
 	int parking_brake_commanded;
 	int safety_lights_1_on_commanded;
 	int safety_lights_2_on_commanded; 
-} dbw_inputs;
+} dbw_inputs_t;
 
 typedef struct dbw_outputs{
 
@@ -28,7 +29,7 @@ typedef struct dbw_outputs{
 
 
 void ProcessCurrentInputs(double time_elapsed);
-dbw_inputs* GetCurrentInputs();
+dbw_inputs_t* GetCurrentInputs();
 void ProcessCurrentOutputs(double time_elapsed);
 void SendUpdateToPC();
 
