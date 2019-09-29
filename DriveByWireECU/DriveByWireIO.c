@@ -64,7 +64,6 @@
  void ProcessCurrentInputs(double time_elapsed)
  {
 	inputs.steering_position = ReadSteeringPosition();
-	
  }
 
  dbw_inputs_t* GetCurrentInputs()
@@ -84,11 +83,11 @@
  //non-zero values turn lights on
  void SetSafetyLight1On(int on)
  {
-
+	gpio_set_pin_level(SafetyLights1On, on);
  }
  void SetSafetyLight2On(int on)
  {
-
+	gpio_set_pin_level(SafetyLights2On, on);
  }
 
  //Cycles safety light mode pin until the desired mode is achieved.
@@ -104,7 +103,8 @@
  //non zero values steer right, zero steers left.
  void SetSteerDirection(int right)
  {
-
+	gpio_set_pin_level(SteerRight, right);
+	gpio_set_pin_level(SteerLeft, !right);
  }
 
  //Applies power to the steering motor as duty cycle percentage
@@ -116,13 +116,12 @@
  //Puts the vehicle in reverse if value is non-zero.
  void SetReverseDrive(int reverse)
  {
- 
+	gpio_set_pin_level(ReverseDrive, reverse);
  }
 
  //Sets the front brake PWM as duty cycle percentage.
  void SetFrontBrake(float duty_cycle)
  {
-
 
  }
 
