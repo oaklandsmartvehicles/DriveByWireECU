@@ -1,10 +1,9 @@
-
 /**
  * \file
  *
- * \brief TCC related functionality declaration.
+ * \brief SAM Timer/Counter
  *
- * Copyright (c) 2017 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
  *
  * \asf_license_start
  *
@@ -29,36 +28,50 @@
  * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
  * \asf_license_stop
- *
  */
 
-#ifndef _TCC_H_INCLUDED
-#define _TCC_H_INCLUDED
+#ifndef _HPL_TC_BASE_H_INCLUDED
+#define _HPL_TC_BASE_H_INCLUDED
 
-#include <compiler.h>
-#include <utils_assert.h>
-
-/**
- * \addtogroup tcc driver
- *
- * \section tcc Revision History
- * - v0.0.0.1 Initial Commit
- *
- *@{
- */
+#include <hpl_timer.h>
+#include <hpl_pwm.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- * \brief Initialize tcc interface
- * \return Initialization status.
+ * \addtogroup tc_group TC Hardware Proxy Layer
+ *
+ * \section tc_hpl_rev Revision History
+ * - v0.0.0.1 Initial Commit
+ *
+ *@{
  */
-int8_t PWM_0_init();
+
+/**
+ * \name HPL functions
+ */
+//@{
+
+/**
+ * \brief Retrieve timer helper functions
+ *
+ * \return A pointer to set of timer helper functions
+ */
+struct _timer_hpl_interface *_tc_get_timer(void);
+
+/**
+ * \brief Retrieve pwm helper functions
+ *
+ * \return A pointer to set of pwm helper functions
+ */
+struct _pwm_hpl_interface *_tc_get_pwm(void);
+
+//@}
+/**@}*/
 
 #ifdef __cplusplus
 }
 #endif
-
-#endif /* _TCC_H_INCLUDED */
+#endif /* _HPL_TC_BASE_H_INCLUDED */

@@ -30,7 +30,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -85,7 +85,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -123,7 +123,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>

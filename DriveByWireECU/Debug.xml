@@ -30,7 +30,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -47,7 +47,6 @@
       <Value>%24(PackRepoDir)\atmel\SAME54_DFP\1.1.134\include</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
-  <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
   <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
@@ -64,6 +63,7 @@
     </ListValues>
   </armgcc.linker.libraries.LibrarySearchPaths>
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
+  <armgcc.linker.memorysettings.ExternalRAM />
   <armgcc.linker.miscellaneous.LinkerFlags>-Tsame54p20a_flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
   <armgcc.assembler.general.IncludePaths>
     <ListValues>
@@ -86,7 +86,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -125,7 +125,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>

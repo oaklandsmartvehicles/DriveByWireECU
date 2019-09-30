@@ -16,6 +16,16 @@ void ADC_0_example(void);
 
 void TARGET_IO_example(void);
 
+void PWM_0_example(void);
+
+void PWM_1_example(void);
+
+void PWM_4_example(void);
+
+void PWM_2_example(void);
+
+void PWM_3_example(void);
+
 void CAN_0_example(void);
 
 #ifdef __cplusplus

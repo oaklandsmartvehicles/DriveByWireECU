@@ -24,7 +24,16 @@ extern "C" {
 #include <hal_adc_sync.h>
 
 #include <hal_usart_sync.h>
-#include <tcc_lite.h>
+#include <hal_pwm.h>
+#include <hpl_tc_base.h>
+#include <hal_pwm.h>
+#include <hpl_tc_base.h>
+#include <hal_pwm.h>
+#include <hpl_tc_base.h>
+#include <hal_pwm.h>
+#include <hpl_tc_base.h>
+#include <hal_pwm.h>
+#include <hpl_tc_base.h>
 #include <hal_can_async.h>
 
 #include <hal_mac_async.h>
@@ -32,7 +41,17 @@ extern "C" {
 extern struct adc_sync_descriptor ADC_0;
 
 extern struct usart_sync_descriptor TARGET_IO;
-extern struct can_async_descriptor  CAN_0;
+
+extern struct pwm_descriptor PWM_0;
+
+extern struct pwm_descriptor PWM_1;
+
+extern struct pwm_descriptor PWM_4;
+
+extern struct pwm_descriptor PWM_2;
+
+extern struct pwm_descriptor       PWM_3;
+extern struct can_async_descriptor CAN_0;
 
 extern struct mac_async_descriptor COMMUNICATION_IO;
 
@@ -44,11 +63,25 @@ void TARGET_IO_PORT_init(void);
 void TARGET_IO_CLOCK_init(void);
 void TARGET_IO_init(void);
 
-void PWM_0_CLOCK_init(void);
-
 void PWM_0_PORT_init(void);
+void PWM_0_CLOCK_init(void);
+void PWM_0_init(void);
 
-int8_t PWM_0_init(void);
+void PWM_1_PORT_init(void);
+void PWM_1_CLOCK_init(void);
+void PWM_1_init(void);
+
+void PWM_4_PORT_init(void);
+void PWM_4_CLOCK_init(void);
+void PWM_4_init(void);
+
+void PWM_2_PORT_init(void);
+void PWM_2_CLOCK_init(void);
+void PWM_2_init(void);
+
+void PWM_3_PORT_init(void);
+void PWM_3_CLOCK_init(void);
+void PWM_3_init(void);
 
 void COMMUNICATION_IO_CLOCK_init(void);
 void COMMUNICATION_IO_init(void);

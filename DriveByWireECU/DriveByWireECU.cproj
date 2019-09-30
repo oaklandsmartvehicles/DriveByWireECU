@@ -298,30 +298,29 @@
           <AcmeProjectActionInfo Action="File" Source="stdio_redirect/stdio_io.c" IsConfig="false" Hash="Nx8PfIAymK/f5AjLql/CyQ" />
           <AcmeProjectActionInfo Action="File" Source="stdio_redirect/stdio_io.h" IsConfig="false" Hash="4X02f8UL8cjBHeGJM3BnHw" />
           <AcmeProjectActionInfo Action="File" Source="main.c" IsConfig="false" Hash="uP8VLO22EwBmDHt+EaCStQ" />
-          <AcmeProjectActionInfo Action="File" Source="lwip_socket_api.c" IsConfig="false" Hash="qr5+bfxY/x6mTpFteCcAwg" />
-          <AcmeProjectActionInfo Action="File" Source="lwip_socket_api.h" IsConfig="false" Hash="6KKenp1ja0PIom+IxpGzZQ" />
-          <AcmeProjectActionInfo Action="File" Source="webserver_tasks.c" IsConfig="false" Hash="ORFDQDUBYlfrJRfKCtdllA" />
-          <AcmeProjectActionInfo Action="File" Source="webserver_tasks.h" IsConfig="false" Hash="2S5ayhkkBKPEl7UFyVqaEg" />
-          <AcmeProjectActionInfo Action="File" Source="config/lwip_socket_api_example_config.h" IsConfig="false" Hash="dY5yTZJ0dHHI2jO6LyeFUw" />
-          <AcmeProjectActionInfo Action="File" Source="driver_init.c" IsConfig="false" Hash="yUXah2BPuAE+recaV5VsmQ" />
-          <AcmeProjectActionInfo Action="File" Source="driver_init.h" IsConfig="false" Hash="SmIXWjUMUXua+iXS5A9JGA" />
-          <AcmeProjectActionInfo Action="File" Source="atmel_start_pins.h" IsConfig="false" Hash="uVJlEkAcEiYBeAG6WhgvjQ" />
-          <AcmeProjectActionInfo Action="File" Source="examples/driver_examples.h" IsConfig="false" Hash="k/uczXPIwC+F2phDHlvitQ" />
-          <AcmeProjectActionInfo Action="File" Source="examples/driver_examples.c" IsConfig="false" Hash="qyHmKV+mlLTtqFMyoV6qfg" />
+          <AcmeProjectActionInfo Action="File" Source="driver_init.c" IsConfig="false" Hash="c/7Q7EYBjCzH+V4/ydJQgA" />
+          <AcmeProjectActionInfo Action="File" Source="driver_init.h" IsConfig="false" Hash="6IvoVbDxN4xSXOx6gFrDvA" />
+          <AcmeProjectActionInfo Action="File" Source="atmel_start_pins.h" IsConfig="false" Hash="4W55JVfhowBBL65vGpVKtw" />
+          <AcmeProjectActionInfo Action="File" Source="examples/driver_examples.h" IsConfig="false" Hash="EjAxu1ikLbY0QtykRYFC0Q" />
+          <AcmeProjectActionInfo Action="File" Source="examples/driver_examples.c" IsConfig="false" Hash="UpSzyy8vN76oLg9daxxbhQ" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hal_adc_sync.h" IsConfig="false" Hash="ez1X5T9kpYwT+1+5x4Pxqg" />
+          <AcmeProjectActionInfo Action="File" Source="hal/include/hal_pwm.h" IsConfig="false" Hash="RXcBZcci/7vXKRJKNIq/Kw" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hal_usart_sync.h" IsConfig="false" Hash="ZzIGSRyjZuxRzFAtNNt7sw" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_adc_async.h" IsConfig="false" Hash="kKbVmqgGDUkuWZYErBwgVA" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_adc_sync.h" IsConfig="false" Hash="dCWrizZn0RtcCM73jZ/k6A" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_missing_features.h" IsConfig="false" Hash="XsAvpgfutzkw0Y5SydYFaw" />
+          <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_pwm.h" IsConfig="false" Hash="1wL9C0Z542rKOnnyJpZ7Yg" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_reset.h" IsConfig="false" Hash="WwLFRlBtuZ/qnD1JuDKnRQ" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_spi_m_async.h" IsConfig="false" Hash="JyMw9jeJO0jGqfT03txHXQ" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_spi_m_dma.h" IsConfig="false" Hash="OoU5yflSLAc5VbWSzixnvg" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_spi_m_sync.h" IsConfig="false" Hash="s1GhyLjhjIsfqixooG3LFA" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_spi_s_async.h" IsConfig="false" Hash="ptPiaJ1lVqH5794NmOHDFQ" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_spi_s_sync.h" IsConfig="false" Hash="gEGr6GqKbsOQvxQYz2fotA" />
+          <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_timer.h" IsConfig="false" Hash="s/0PW0pyF4MQIYZJ6S0wyA" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_usart_async.h" IsConfig="false" Hash="tBfmk3BN3Q1WbYVoWDbsJw" />
           <AcmeProjectActionInfo Action="File" Source="hal/include/hpl_usart_sync.h" IsConfig="false" Hash="Yj+PoPxG2CqDOy5XoIWkwg" />
           <AcmeProjectActionInfo Action="File" Source="hal/src/hal_adc_sync.c" IsConfig="false" Hash="g0MT/8E9mrmMV9tMAyu/aQ" />
+          <AcmeProjectActionInfo Action="File" Source="hal/src/hal_pwm.c" IsConfig="false" Hash="ZFJmg7/0rhQ6JMKyxuk9kw" />
           <AcmeProjectActionInfo Action="File" Source="hal/src/hal_usart_sync.c" IsConfig="false" Hash="VBVlAmBFEYTTUMHeIRFSxg" />
           <AcmeProjectActionInfo Action="File" Source="hal/utils/include/parts.h" IsConfig="false" Hash="THMC0T2wU10PzPgIVGK93g" />
           <AcmeProjectActionInfo Action="File" Source="hpl/adc/hpl_adc.c" IsConfig="false" Hash="XURzOOXJFtqa20hFKi/Nlw" />
@@ -344,8 +343,8 @@
           <AcmeProjectActionInfo Action="File" Source="hpl/port/hpl_gpio_base.h" IsConfig="false" Hash="tEjgvZ4kvfccSWnEgilG5Q" />
           <AcmeProjectActionInfo Action="File" Source="hpl/ramecc/hpl_ramecc.c" IsConfig="false" Hash="pMdmwVWBg16VG8HOwA3DPw" />
           <AcmeProjectActionInfo Action="File" Source="hpl/sercom/hpl_sercom.c" IsConfig="false" Hash="BflXLILNQAk3jmU4hRrZ8Q" />
-          <AcmeProjectActionInfo Action="File" Source="hpl/tcc/tcc_lite.c" IsConfig="false" Hash="Yx7sbU6J8gAP4/LZE4cArQ" />
-          <AcmeProjectActionInfo Action="File" Source="hpl/tcc/tcc_lite.h" IsConfig="false" Hash="prwUpsHYgNE/U9mIl723kA" />
+          <AcmeProjectActionInfo Action="File" Source="hpl/tc/hpl_tc.c" IsConfig="false" Hash="wsUsKtmCO4JC62P7qm/jLw" />
+          <AcmeProjectActionInfo Action="File" Source="hpl/tc/hpl_tc_base.h" IsConfig="false" Hash="gjj5IyaZPy6sUReifzS1GQ" />
           <AcmeProjectActionInfo Action="File" Source="rtos_start.c" IsConfig="false" Hash="4BS7mmZj2h5E/hJftkfFUQ" />
           <AcmeProjectActionInfo Action="File" Source="rtos_start.h" IsConfig="false" Hash="mPPwpzJhDl2UogOaVV/OWQ" />
           <AcmeProjectActionInfo Action="File" Source="eth_ipstack_main.c" IsConfig="false" Hash="AnK6eK/397eHzzUM/c6ekw" />
@@ -367,7 +366,8 @@
           <AcmeProjectActionInfo Action="File" Source="config/hpl_oscctrl_config.h" IsConfig="true" Hash="uzEpFoaBTLlpyWknL/fmxg" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_port_config.h" IsConfig="true" Hash="5iQ/eeupKkHFkYA/g43bXQ" />
           <AcmeProjectActionInfo Action="File" Source="config/hpl_sercom_config.h" IsConfig="true" Hash="Zke7CJ2HIoi89R99l2ndPA" />
-          <AcmeProjectActionInfo Action="File" Source="config/peripheral_clk_config.h" IsConfig="true" Hash="gCAAcJ9gO6InCFIdjDjiHw" />
+          <AcmeProjectActionInfo Action="File" Source="config/hpl_tc_config.h" IsConfig="true" Hash="qZL4/AR6ZalER6+vDYhVpw" />
+          <AcmeProjectActionInfo Action="File" Source="config/peripheral_clk_config.h" IsConfig="true" Hash="4/BClKPqPTfnD98TSYqQqg" />
           <AcmeProjectActionInfo Action="File" Source="config/FreeRTOSConfig.h" IsConfig="true" Hash="VWHpUAeQJE1i64lutfFTlw" />
           <AcmeProjectActionInfo Action="File" Source="config/lwip_macif_config.h" IsConfig="true" Hash="qcUh2VEJZZrzLsz7FnbAiw" />
           <AcmeProjectActionInfo Action="File" Source="config/lwipopts.h" IsConfig="true" Hash="BX1XW4t/DO3kRFK364QAkg" />
@@ -412,7 +412,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -467,7 +467,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -505,7 +505,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -559,7 +559,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -615,7 +615,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -654,7 +654,7 @@
       <Value>../hpl/port</Value>
       <Value>../hpl/ramecc</Value>
       <Value>../hpl/sercom</Value>
-      <Value>../hpl/tcc</Value>
+      <Value>../hpl/tc</Value>
       <Value>../hri</Value>
       <Value>../thirdparty/RTOS</Value>
       <Value>../thirdparty/RTOS/freertos/FreeRTOSV8.2.3</Value>
@@ -721,6 +721,9 @@
     <Compile Include="config\hpl_sercom_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="config\hpl_tc_config.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="config\ieee8023_mii_standard_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -728,9 +731,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="config\lwip_macif_config.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="config\lwip_socket_api_example_config.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="config\peripheral_clk_config.h">
@@ -814,6 +814,9 @@
     <Compile Include="hal\include\hal_mac_async.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="hal\include\hal_pwm.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="hal\include\hal_sleep.h">
       <SubType>compile</SubType>
     </Compile>
@@ -874,6 +877,9 @@
     <Compile Include="hal\include\hpl_missing_features.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="hal\include\hpl_pwm.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="hal\include\hpl_ramecc.h">
       <SubType>compile</SubType>
     </Compile>
@@ -905,6 +911,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hal\include\hpl_spi_s_sync.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hal\include\hpl_timer.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hal\include\hpl_usart.h">
@@ -941,6 +950,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hal\src\hal_mac_async.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hal\src\hal_pwm.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hal\src\hal_sleep.c">
@@ -1051,10 +1063,10 @@
     <Compile Include="hpl\sercom\hpl_sercom.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="hpl\tcc\tcc_lite.c">
+    <Compile Include="hpl\tc\hpl_tc.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="hpl\tcc\tcc_lite.h">
+    <Compile Include="hpl\tc\hpl_tc_base.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hri\hri_ac_e54.h">
@@ -1656,7 +1668,6 @@
     <Folder Include="hpl\cmcc\" />
     <Folder Include="hpl\core\" />
     <Folder Include="hpl\dmac\" />
-    <Folder Include="hpl\doc_lite\" />
     <Folder Include="hpl\gclk\" />
     <Folder Include="hpl\gmac\" />
     <Folder Include="hpl\mclk\" />
@@ -1666,7 +1677,7 @@
     <Folder Include="hpl\port\" />
     <Folder Include="hpl\ramecc\" />
     <Folder Include="hpl\sercom\" />
-    <Folder Include="hpl\tcc\" />
+    <Folder Include="hpl\tc\" />
     <Folder Include="hri\" />
     <Folder Include="lwip\" />
     <Folder Include="lwip\lwip-1.4.0\" />
@@ -1716,9 +1727,6 @@
     <None Include="documentation\lwip_macif.rst">
       <SubType>compile</SubType>
     </None>
-    <None Include="documentation\lwip_socket_api_example.rst">
-      <SubType>compile</SubType>
-    </None>
     <None Include="documentation\RTOS.rst">
       <SubType>compile</SubType>
     </None>
@@ -1734,10 +1742,10 @@
     <None Include="hal\documentation\mac_async.rst">
       <SubType>compile</SubType>
     </None>
-    <None Include="hal\documentation\usart_sync.rst">
+    <None Include="hal\documentation\pwm.rst">
       <SubType>compile</SubType>
     </None>
-    <None Include="hpl\doc_lite\tcc.rst">
+    <None Include="hal\documentation\usart_sync.rst">
       <SubType>compile</SubType>
     </None>
     <None Include="lwip\lwip-1.4.0\CHANGELOG">

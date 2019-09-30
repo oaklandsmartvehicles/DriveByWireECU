@@ -1,20 +1,18 @@
 format_version: '2'
-name: LwIP socket api example
+name: My Project
 versions:
   api: '1.0'
   backend: 1.6.148
   commit: 605f106ab95776472e3febf2fac2471441fb1816
-  content: 1.0.1600
+  content: 1.0.1635
   content_pack_name: acme-packs-all
   format: '2'
-  frontend: 1.6.1881
+  frontend: 1.6.1884
 board:
   identifier: SAME54XplainedPro
   device: SAME54P20A-AU
 details: null
-application:
-  definition: 'Atmel:Application_Examples:0.0.1::Application:LwIP_socket_api_example:'
-  configuration: null
+application: null
 middlewares:
   FREERTOS_V823_0:
     user_label: FREERTOS_V823_0
@@ -1196,217 +1194,202 @@ drivers:
           slow_gclk_selection: Generic clock generator 3
   PWM_0:
     user_label: PWM_0
-    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::TCC1::driver_config_definition::PWM.Mode::Lite:TCC:PWM
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::TC0::driver_config_definition::PWM::HAL:Driver:PWM
     functionality: PWM
-    api: Lite:TCC:PWM
+    api: HAL:Driver:PWM
     configuration:
-      cc_cc0: 0
-      cc_cc1: 0
-      cc_cc2: 0
-      cc_cc3: 0
-      cc_cc4: 0
-      cc_cc5: 0
-      cc_control: false
-      ctrla_alock: false
-      ctrla_control: false
-      ctrla_enable: true
-      ctrla_prescaler: DIV1
-      ctrla_prescsync: GCLK
-      ctrla_runstdby: false
-      ctrlbset_cmd: NONE
-      ctrlbset_control: false
-      ctrlbset_dir: false
-      ctrlbset_idxcmd: DISABLE
-      ctrlbset_lupd: false
-      ctrlbset_oneshot: false
-      dbgctrl_control: false
-      dbgctrl_dbgrun: false
-      dbgctrl_fddbd: false
-      drvctrl_control: false
-      drvctrl_filterval0: 0
-      drvctrl_filterval1: 0
-      drvctrl_inven0: false
-      drvctrl_inven1: false
-      drvctrl_inven2: false
-      drvctrl_inven3: false
-      drvctrl_inven4: false
-      drvctrl_inven5: false
-      drvctrl_inven6: false
-      drvctrl_inven7: false
-      drvctrl_nre0: false
-      drvctrl_nre1: false
-      drvctrl_nre2: false
-      drvctrl_nre3: false
-      drvctrl_nre4: false
-      drvctrl_nre5: false
-      drvctrl_nre6: false
-      drvctrl_nre7: false
-      drvctrl_nrv0: false
-      drvctrl_nrv1: false
-      drvctrl_nrv2: false
-      drvctrl_nrv3: false
-      drvctrl_nrv4: false
-      drvctrl_nrv5: false
-      drvctrl_nrv6: false
-      drvctrl_nrv7: false
-      evctrl_cnteo: false
-      evctrl_cntsel: START
-      evctrl_control: false
-      evctrl_evact0: 'OFF'
-      evctrl_evact1: 'OFF'
-      evctrl_mcei0: false
-      evctrl_mcei1: false
-      evctrl_mcei2: false
-      evctrl_mcei3: false
-      evctrl_mcei4: false
-      evctrl_mcei5: false
-      evctrl_mceo0: false
-      evctrl_mceo1: false
-      evctrl_mceo2: false
-      evctrl_mceo3: false
-      evctrl_mceo4: false
-      evctrl_mceo5: false
-      evctrl_ovfeo: false
-      evctrl_tcei0: false
-      evctrl_tcei1: false
-      evctrl_tcinv0: false
-      evctrl_tcinv1: false
-      evctrl_trgeo: false
-      fctrla_blank: NONE
-      fctrla_blankpresc: false
-      fctrla_blankval: 0
-      fctrla_chsel: CC0
-      fctrla_control: false
-      fctrla_filterval: 0
-      fctrla_halt: DISABLE
-      fctrla_keep: false
-      fctrla_qual: false
-      fctrla_restart: false
-      fctrla_src: DISABLE
-      fctrlb_blank: NONE
-      fctrlb_blankpresc: false
-      fctrlb_blankval: 0
-      fctrlb_chsel: CC0
-      fctrlb_control: false
-      fctrlb_filterval: 0
-      fctrlb_halt: DISABLE
-      fctrlb_keep: false
-      fctrlb_qual: false
-      fctrlb_restart: false
-      fctrlb_src: DISABLE
-      intenset_cnt: false
-      intenset_control: false
-      intenset_dfs: false
-      intenset_err: false
-      intenset_fault0: false
-      intenset_fault1: false
-      intenset_faulta: false
-      intenset_faultb: false
-      intenset_mc0: false
-      intenset_mc1: false
-      intenset_mc2: false
-      intenset_mc3: false
-      intenset_mc4: false
-      intenset_mc5: false
-      intenset_ovf: false
-      intenset_trg: false
-      patt_control: false
-      patt_pge0: false
-      patt_pge1: false
-      patt_pge2: false
-      patt_pge3: false
-      patt_pgv0: false
-      patt_pgv1: false
-      patt_pgv2: false
-      patt_pgv3: false
-      per_control: false
-      per_per: 0
-      wave_ciccen0: false
-      wave_ciccen1: false
-      wave_ciccen2: false
-      wave_ciccen3: false
-      wave_ciperen: false
-      wave_control: false
-      wave_pol0: false
-      wave_pol1: false
-      wave_pol2: false
-      wave_pol3: false
-      wave_pol4: false
-      wave_pol5: false
-      wave_ramp: RAMP1
-      wave_swap0: false
-      wave_swap1: false
-      wave_swap2: false
-      wave_swap3: false
-      wave_wavegen: NFRQ
-      wexctrl_control: false
-      wexctrl_dths: 0
-      wexctrl_dtien0: false
-      wexctrl_dtien1: false
-      wexctrl_dtien2: false
-      wexctrl_dtien3: false
-      wexctrl_dtls: 0
-      wexctrl_otmx: 0
+      tc_arch_alock: The Lock Update bit is not affected on overflow/underflow and
+        re-trigger event
+      tc_arch_dbgrun: false
+      tc_arch_evact: Event action disabled
+      tc_arch_mceo0: false
+      tc_arch_mceo1: false
+      tc_arch_ondemand: false
+      tc_arch_ovfeo: false
+      tc_arch_presync: Reload or reset counter on next GCLK
+      tc_arch_runstdby: false
+      tc_arch_tcei: false
+      tc_arch_tcinv: false
+      tc_arch_wave_duty_val: 500
+      tc_arch_wave_per_val: 1000
+      tc_mode: Counter in 16-bit mode
+      tc_prescaler: No division
+      timer_event_control: false
     optional_signals:
-    - identifier: PWM_0:WO/0
-      pad: PC14
+    - identifier: PWM_0:WO/1
+      pad: PA05
       mode: PWM output
       configuration: null
-      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TCC1.WO.0
-      name: TCC1/WO/0
-      label: WO/0
-    - identifier: PWM_0:WO/2
-      pad: PB26
-      mode: PWM output
-      configuration: null
-      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TCC1.WO.2
-      name: TCC1/WO/2
-      label: WO/2
-    - identifier: PWM_0:WO/3
-      pad: PB27
-      mode: PWM output
-      configuration: null
-      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TCC1.WO.3
-      name: TCC1/WO/3
-      label: WO/3
-    - identifier: PWM_0:WO/4
-      pad: PB28
-      mode: PWM output
-      configuration: null
-      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TCC1.WO.4
-      name: TCC1/WO/4
-      label: WO/4
-    - identifier: PWM_0:WO/5
-      pad: PB29
-      mode: PWM output
-      configuration: null
-      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TCC1.WO.5
-      name: TCC1/WO/5
-      label: WO/5
-    - identifier: PWM_0:WO/6
-      pad: PA22
-      mode: PWM output
-      configuration: null
-      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TCC1.WO.6
-      name: TCC1/WO/6
-      label: WO/6
-    - identifier: PWM_0:WO/7
-      pad: PA23
-      mode: PWM output
-      configuration: null
-      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TCC1.WO.7
-      name: TCC1/WO/7
-      label: WO/7
+      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TC0.WO.1
+      name: TC0/WO/1
+      label: WO/1
     variant: null
     clocks:
       domain_group:
         nodes:
-        - name: TCC
+        - name: TC
           input: Generic clock generator 0
           external: false
           external_frequency: 0
         configuration:
-          tcc_gclk_selection: Generic clock generator 0
+          tc_gclk_selection: Generic clock generator 0
+  PWM_1:
+    user_label: PWM_1
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::TC1::driver_config_definition::PWM::HAL:Driver:PWM
+    functionality: PWM
+    api: HAL:Driver:PWM
+    configuration:
+      tc_arch_alock: The Lock Update bit is not affected on overflow/underflow and
+        re-trigger event
+      tc_arch_dbgrun: false
+      tc_arch_evact: Event action disabled
+      tc_arch_mceo0: false
+      tc_arch_mceo1: false
+      tc_arch_ondemand: false
+      tc_arch_ovfeo: false
+      tc_arch_presync: Reload or reset counter on next GCLK
+      tc_arch_runstdby: false
+      tc_arch_tcei: false
+      tc_arch_tcinv: false
+      tc_arch_wave_duty_val: 500
+      tc_arch_wave_per_val: 1000
+      tc_mode: Counter in 16-bit mode
+      tc_prescaler: No division
+      timer_event_control: false
+    optional_signals: []
+    variant: null
+    clocks:
+      domain_group:
+        nodes:
+        - name: TC
+          input: Generic clock generator 0
+          external: false
+          external_frequency: 0
+        configuration:
+          tc_gclk_selection: Generic clock generator 0
+  PWM_4:
+    user_label: PWM_4
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::TC4::driver_config_definition::PWM::HAL:Driver:PWM
+    functionality: PWM
+    api: HAL:Driver:PWM
+    configuration:
+      tc_arch_alock: The Lock Update bit is not affected on overflow/underflow and
+        re-trigger event
+      tc_arch_dbgrun: false
+      tc_arch_evact: Event action disabled
+      tc_arch_mceo0: false
+      tc_arch_mceo1: false
+      tc_arch_ondemand: false
+      tc_arch_ovfeo: false
+      tc_arch_presync: Reload or reset counter on next GCLK
+      tc_arch_runstdby: false
+      tc_arch_tcei: false
+      tc_arch_tcinv: false
+      tc_arch_wave_duty_val: 500
+      tc_arch_wave_per_val: 1000
+      tc_mode: Counter in 16-bit mode
+      tc_prescaler: No division
+      timer_event_control: false
+    optional_signals:
+    - identifier: PWM_4:WO/1
+      pad: PB09
+      mode: PWM output
+      configuration: null
+      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TC4.WO.1
+      name: TC4/WO/1
+      label: WO/1
+    variant: null
+    clocks:
+      domain_group:
+        nodes:
+        - name: TC
+          input: Generic clock generator 0
+          external: false
+          external_frequency: 0
+        configuration:
+          tc_gclk_selection: Generic clock generator 0
+  PWM_2:
+    user_label: PWM_2
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::TC5::driver_config_definition::PWM::HAL:Driver:PWM
+    functionality: PWM
+    api: HAL:Driver:PWM
+    configuration:
+      tc_arch_alock: The Lock Update bit is not affected on overflow/underflow and
+        re-trigger event
+      tc_arch_dbgrun: false
+      tc_arch_evact: Event action disabled
+      tc_arch_mceo0: false
+      tc_arch_mceo1: false
+      tc_arch_ondemand: false
+      tc_arch_ovfeo: false
+      tc_arch_presync: Reload or reset counter on next GCLK
+      tc_arch_runstdby: false
+      tc_arch_tcei: false
+      tc_arch_tcinv: false
+      tc_arch_wave_duty_val: 500
+      tc_arch_wave_per_val: 1000
+      tc_mode: Counter in 16-bit mode
+      tc_prescaler: No division
+      timer_event_control: false
+    optional_signals:
+    - identifier: PWM_2:WO/1
+      pad: PB15
+      mode: PWM output
+      configuration: null
+      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TC5.WO.1
+      name: TC5/WO/1
+      label: WO/1
+    variant: null
+    clocks:
+      domain_group:
+        nodes:
+        - name: TC
+          input: Generic clock generator 0
+          external: false
+          external_frequency: 0
+        configuration:
+          tc_gclk_selection: Generic clock generator 0
+  PWM_3:
+    user_label: PWM_3
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::TC6::driver_config_definition::PWM::HAL:Driver:PWM
+    functionality: PWM
+    api: HAL:Driver:PWM
+    configuration:
+      tc_arch_alock: The Lock Update bit is not affected on overflow/underflow and
+        re-trigger event
+      tc_arch_dbgrun: false
+      tc_arch_evact: Event action disabled
+      tc_arch_mceo0: false
+      tc_arch_mceo1: false
+      tc_arch_ondemand: false
+      tc_arch_ovfeo: false
+      tc_arch_presync: Reload or reset counter on next GCLK
+      tc_arch_runstdby: false
+      tc_arch_tcei: false
+      tc_arch_tcinv: false
+      tc_arch_wave_duty_val: 500
+      tc_arch_wave_per_val: 1000
+      tc_mode: Counter in 16-bit mode
+      tc_prescaler: No division
+      timer_event_control: false
+    optional_signals:
+    - identifier: PWM_3:WO/1
+      pad: PB03
+      mode: PWM output
+      configuration: null
+      definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::optional_signal_definition::TC6.WO.1
+      name: TC6/WO/1
+      label: WO/1
+    variant: null
+    clocks:
+      domain_group:
+        nodes:
+        - name: TC
+          input: Generic clock generator 0
+          external: false
+          external_frequency: 0
+        configuration:
+          tc_gclk_selection: Generic clock generator 0
   CAN_0:
     user_label: CAN_0
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::CAN1::driver_config_definition::CAN::HAL:Driver:CAN.Async
@@ -1636,6 +1619,18 @@ pads:
     mode: Analog
     user_label: SteeringPosition
     configuration: null
+  PB09:
+    name: PB09
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB09
+    mode: Peripheral IO
+    user_label: PB09
+    configuration: null
+  PA05:
+    name: PA05
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PA05
+    mode: Peripheral IO
+    user_label: PA05
+    configuration: null
   SteerLeft:
     name: PA06
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PA06
@@ -1660,6 +1655,12 @@ pads:
     mode: Peripheral IO
     user_label: PB13
     configuration: null
+  PB15:
+    name: PB15
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB15
+    mode: Peripheral IO
+    user_label: PB15
+    configuration: null
   SafetyLights1Mode:
     name: PC10
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC10
@@ -1677,12 +1678,6 @@ pads:
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC12
     mode: Peripheral IO
     user_label: PC12
-    configuration: null
-  PC14:
-    name: PC14
-    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC14
-    mode: Peripheral IO
-    user_label: PC14
     configuration: null
   PA12:
     name: PA12
@@ -1739,18 +1734,6 @@ pads:
     mode: Peripheral IO
     user_label: PC20
     configuration: null
-  PA22:
-    name: PA22
-    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PA22
-    mode: Peripheral IO
-    user_label: PA22
-    configuration: null
-  PA23:
-    name: PA23
-    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PA23
-    mode: Peripheral IO
-    user_label: PA23
-    configuration: null
   PB24:
     name: PB24
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB24
@@ -1763,30 +1746,6 @@ pads:
     mode: Peripheral IO
     user_label: PB25
     configuration: null
-  VehicleSpeed:
-    name: PB26
-    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB26
-    mode: Peripheral IO
-    user_label: VehicleSpeed
-    configuration: null
-  SteeringTorque:
-    name: PB27
-    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB27
-    mode: Peripheral IO
-    user_label: SteeringTorque
-    configuration: null
-  FrontBrake:
-    name: PB28
-    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB28
-    mode: Peripheral IO
-    user_label: FrontBrake
-    configuration: null
-  RearBrake:
-    name: PB29
-    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB29
-    mode: Peripheral IO
-    user_label: RearBrake
-    configuration: null
   ReverseDrive:
     name: PC30
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC30
@@ -1798,5 +1757,11 @@ pads:
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB01
     mode: Digital output
     user_label: SafetyLights2Mode
+    configuration: null
+  PB03:
+    name: PB03
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB03
+    mode: Peripheral IO
+    user_label: PB03
     configuration: null
 toolchain_options: []

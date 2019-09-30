@@ -36,6 +36,51 @@ void TARGET_IO_example(void)
 	io_write(io, (uint8_t *)"Hello World!", 12);
 }
 
+/**
+ * Example of using PWM_0.
+ */
+void PWM_0_example(void)
+{
+	pwm_set_parameters(&PWM_0, 10000, 5000);
+	pwm_enable(&PWM_0);
+}
+
+/**
+ * Example of using PWM_1.
+ */
+void PWM_1_example(void)
+{
+	pwm_set_parameters(&PWM_1, 10000, 5000);
+	pwm_enable(&PWM_1);
+}
+
+/**
+ * Example of using PWM_4.
+ */
+void PWM_4_example(void)
+{
+	pwm_set_parameters(&PWM_4, 10000, 5000);
+	pwm_enable(&PWM_4);
+}
+
+/**
+ * Example of using PWM_2.
+ */
+void PWM_2_example(void)
+{
+	pwm_set_parameters(&PWM_2, 10000, 5000);
+	pwm_enable(&PWM_2);
+}
+
+/**
+ * Example of using PWM_3.
+ */
+void PWM_3_example(void)
+{
+	pwm_set_parameters(&PWM_3, 10000, 5000);
+	pwm_enable(&PWM_3);
+}
+
 void CAN_0_tx_callback(struct can_async_descriptor *const descr)
 {
 	(void)descr;

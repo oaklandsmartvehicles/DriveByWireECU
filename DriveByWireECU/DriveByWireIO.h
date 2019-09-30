@@ -2,7 +2,7 @@
  * DriveByWireIO.h
  *
  * Created: 9/25/2019 7:52:07 PM
- *  Author: John
+ *  Author: John Brooks
  */ 
 
 
@@ -40,6 +40,9 @@ void SetSafetyLight2On(int on);
 //Cycles safety light mode pin until the desired mode is achieved.
 void SetSafetyLight1Mode(int mode);
 void SetSafetyLight2Mode(int mode);
+
+//non zero values steer right, zero steers left.
+void SetAcceleration(float duty_cycle);
 
 //non zero values steer right, zero steers left.
 void SetSteerDirection(int right);

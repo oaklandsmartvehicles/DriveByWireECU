@@ -2,36 +2,60 @@
  * DriveByWireIO.c
  *
  * Created: 9/29/2019 4:01:47 PM
- *  Author: John
+ *  Author: John Brooks
  */ 
- #include "DriveByWireIO.h"
- #include "hal_gpio.h"
- #include "hal_delay.h"
- #include "hal_usart_sync.h"
- #include "driver_init.h"
+#include "DriveByWireIO.h"
+#include "hal_gpio.h"
+#include "hal_delay.h"
+#include "hal_usart_sync.h"
+#include "hal_pwm.h"
+#include "driver_init.h"
 
- typedef union adc_val_t {
-	 uint8_t ADC_Read_8[2];
-	 uint16_t ADC_Read;
- } adc_val_t;
+//PWM clock is 12Mhz
+#define PWM_TICKS_PER_SECOND 0xB71B00
 
- dbw_inputs_t inputs;
+//PWM Frequency in Hz
+#define VEHICLE_SPEED_FREQ 1000
+#define STEERING_TORQUE_FREQ 1000
+#define FRONT_BRAKE_FREQ 1000
+#define REAR_BRAKE_FREQ 1000
+#define ACCELERATION_FREQ 1000
 
- //interpolation table of steering positions[]
- const float steering_positions[] = {0, 1, 2};
- const float steering_voltages[] = {0, 1.65, 3.3};
- int steering_table_size = sizeof(steering_positions) / sizeof(float);
+//Duty Cycle of Rear Brake
+#define REAR_BRAKE_ENGAGED_DUTY_CYCLE 0.50f
+#define REAR_BRAKE_DISENGAGED_DUTY_CYCLE 0.0f
+
+//Mapping of PWM to Outputs
+#define PWM_Acceleration PWM_0
+#define PWM_SteeringTorque PWM_1
+#define PWM_FrontBrake PWM_2
+#define PWM_RearBrake PWM_3
+
+//rename this if used for something. For now PWM_4 is just an available pin.
+#define PWM_ExtraPWM PWM_4
+
+typedef union adc_val_t {
+	uint8_t ADC_Read_8[2];
+	uint16_t ADC_Read;
+} adc_val_t;
+
+dbw_inputs_t inputs;
+
+//interpolation table of steering positions[]
+const float steering_positions[] = {0, 1, 2};
+const float steering_voltages[] = {0, 1.65, 3.3};
+int steering_table_size = sizeof(steering_positions) / sizeof(float);
  
 
- float LinarlyInterpolate(float val_x, float left_x, float right_x, float left_y, float right_y)
- {
+float LinearlyInterpolate(float val_x, float left_x, float right_x, float left_y, float right_y)
+{
 	float delta_x = right_x - left_x;
 	float percent_x = (val_x - left_x) / delta_x;
 	return left_y + (percent_x * (right_y - left_y));
- }
+}
 
- float ReadSteeringPosition()
- {
+float ReadSteeringPosition()
+{
 	//TODO: determine voltage mapping between linear potentiometer and steering angle.
 	//fill out linear interpolation table above
 	if( steering_table_size < 2 )
@@ -54,79 +78,94 @@
 				return steering_positions[0];
 
 			//some intermediate value
-			return LinarlyInterpolate(steering_voltage, steering_voltages[i], steering_voltages[i+1], steering_positions[i], steering_positions[i+1]);
+			return LinearlyInterpolate(steering_voltage, steering_voltages[i], steering_voltages[i+1], steering_positions[i], steering_positions[i+1]);
 		}
 	}
 	//if execution reaches here, then the above code is broken
 	return 0.0f;
- }
+}
 
- void ProcessCurrentInputs(double time_elapsed)
- {
+void ProcessCurrentInputs(double time_elapsed)
+{
 	inputs.steering_position = ReadSteeringPosition();
- }
+}
 
- dbw_inputs_t* GetCurrentInputs()
- {
+dbw_inputs_t* GetCurrentInputs()
+{
 	return &inputs;
- }
+}
 
- void ProcessCurrentOutputs(double time_elapsed)
- {
+void ProcessCurrentOutputs(double time_elapsed)
+{
 
- }
- void SendUpdateToPC()
- {
+}
+void SendUpdateToPC()
+{
 
- }
+}
 
- //non-zero values turn lights on
- void SetSafetyLight1On(int on)
- {
+//non-zero values turn lights on
+void SetSafetyLight1On(int on)
+{
 	gpio_set_pin_level(SafetyLights1On, on);
- }
- void SetSafetyLight2On(int on)
- {
+}
+void SetSafetyLight2On(int on)
+{
 	gpio_set_pin_level(SafetyLights2On, on);
- }
+}
 
- //Cycles safety light mode pin until the desired mode is achieved.
- void SetSafetyLight1Mode(int mode)
- {
+//Cycles safety light mode pin until the desired mode is achieved.
+void SetSafetyLight1Mode(int mode)
+{
 
- }
- void SetSafetyLight2Mode(int mode)
- {
+}
+void SetSafetyLight2Mode(int mode)
+{
 
- }
+}
 
- //non zero values steer right, zero steers left.
- void SetSteerDirection(int right)
- {
+//non zero values steer right, zero steers left.
+void SetSteerDirection(int right)
+{
 	gpio_set_pin_level(SteerRight, right);
 	gpio_set_pin_level(SteerLeft, !right);
- }
+}
 
- //Applies power to the steering motor as duty cycle percentage
- void SetSteeringTorque(float duty_cycle)
- {
-
- }
-
- //Puts the vehicle in reverse if value is non-zero.
- void SetReverseDrive(int reverse)
- {
+//Puts the vehicle in reverse if value is non-zero.
+void SetReverseDrive(int reverse)
+{
 	gpio_set_pin_level(ReverseDrive, reverse);
- }
+}
+
+//Applies power to the steering motor as duty cycle percentage
+void SetSteeringTorque(float duty_cycle)
+{
+	const static int STEERING_TORQUE_FREQ_TICKS = PWM_TICKS_PER_SECOND / REAR_BRAKE_FREQ;
+	pwm_set_parameters(&PWM_SteeringTorque, STEERING_TORQUE_FREQ_TICKS, duty_cycle * STEERING_TORQUE_FREQ_TICKS);
+	pwm_enable(&PWM_SteeringTorque);
+}
 
  //Sets the front brake PWM as duty cycle percentage.
  void SetFrontBrake(float duty_cycle)
  {
-
+	const static int FRONT_BRAKE_FREQ_TICKS = PWM_TICKS_PER_SECOND / REAR_BRAKE_FREQ;
+	pwm_set_parameters(&PWM_FrontBrake, FRONT_BRAKE_FREQ_TICKS, duty_cycle * FRONT_BRAKE_FREQ_TICKS);
+	pwm_enable(&PWM_FrontBrake);
  }
 
  //Sets the rear drum brake PWM to the engaged position if value is non-zero
  void SetParkingBrake(int engaged)
  {
-
+	const static int REAR_BRAKE_FREQ_TICKS = PWM_TICKS_PER_SECOND / REAR_BRAKE_FREQ;
+	float duty_cycle = engaged ? REAR_BRAKE_ENGAGED_DUTY_CYCLE : REAR_BRAKE_DISENGAGED_DUTY_CYCLE;
+	pwm_set_parameters(&PWM_RearBrake, REAR_BRAKE_FREQ_TICKS, duty_cycle * REAR_BRAKE_FREQ_TICKS);
+	pwm_enable(&PWM_RearBrake);
  }
+
+//Sets the acceleration value to the specified duty cycle
+void SetAcceleration(float duty_cycle)
+{
+	const static int ACCELERATION_FREQ_TICKS = PWM_TICKS_PER_SECOND / ACCELERATION_FREQ;
+	pwm_set_parameters(&PWM_Acceleration, ACCELERATION_FREQ_TICKS, duty_cycle * ACCELERATION_FREQ_TICKS);
+	pwm_enable(&PWM_Acceleration);
+}

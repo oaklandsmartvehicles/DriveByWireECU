@@ -20,12 +20,24 @@ struct adc_sync_descriptor ADC_0;
 
 struct usart_sync_descriptor TARGET_IO;
 
+struct pwm_descriptor PWM_0;
+
+struct pwm_descriptor PWM_1;
+
+struct pwm_descriptor PWM_4;
+
+struct pwm_descriptor PWM_2;
+
+struct pwm_descriptor PWM_3;
+
 struct mac_async_descriptor COMMUNICATION_IO;
 
 void ADC_0_PORT_init(void)
 {
+
 	// Disable digital pin circuitry
 	gpio_set_pin_direction(SteeringPosition, GPIO_DIRECTION_OFF);
+
 	gpio_set_pin_function(SteeringPosition, PINMUX_PB08B_ADC1_AIN0);
 }
 
@@ -69,25 +81,99 @@ void TARGET_IO_init(void)
 void PWM_0_PORT_init(void)
 {
 
-	gpio_set_pin_function(PC14, PINMUX_PC14G_TCC1_WO0);
-
-	gpio_set_pin_function(VehicleSpeed, PINMUX_PB26F_TCC1_WO2);
-
-	gpio_set_pin_function(SteeringTorque, PINMUX_PB27F_TCC1_WO3);
-
-	gpio_set_pin_function(FrontBrake, PINMUX_PB28F_TCC1_WO4);
-
-	gpio_set_pin_function(RearBrake, PINMUX_PB29F_TCC1_WO5);
-
-	gpio_set_pin_function(PA22, PINMUX_PA22F_TCC1_WO6);
-
-	gpio_set_pin_function(PA23, PINMUX_PA23F_TCC1_WO7);
+	gpio_set_pin_function(PA05, PINMUX_PA05E_TC0_WO1);
 }
 
 void PWM_0_CLOCK_init(void)
 {
-	hri_mclk_set_APBBMASK_TCC1_bit(MCLK);
-	hri_gclk_write_PCHCTRL_reg(GCLK, TCC1_GCLK_ID, CONF_GCLK_TCC1_SRC | (1 << GCLK_PCHCTRL_CHEN_Pos));
+
+	hri_mclk_set_APBAMASK_TC0_bit(MCLK);
+	hri_gclk_write_PCHCTRL_reg(GCLK, TC0_GCLK_ID, CONF_GCLK_TC0_SRC | (1 << GCLK_PCHCTRL_CHEN_Pos));
+}
+
+void PWM_0_init(void)
+{
+	PWM_0_CLOCK_init();
+	PWM_0_PORT_init();
+	pwm_init(&PWM_0, TC0, _tc_get_pwm());
+}
+
+void PWM_1_PORT_init(void)
+{
+}
+
+void PWM_1_CLOCK_init(void)
+{
+
+	hri_mclk_set_APBAMASK_TC1_bit(MCLK);
+	hri_gclk_write_PCHCTRL_reg(GCLK, TC1_GCLK_ID, CONF_GCLK_TC1_SRC | (1 << GCLK_PCHCTRL_CHEN_Pos));
+}
+
+void PWM_1_init(void)
+{
+	PWM_1_CLOCK_init();
+	PWM_1_PORT_init();
+	pwm_init(&PWM_1, TC1, _tc_get_pwm());
+}
+
+void PWM_4_PORT_init(void)
+{
+
+	gpio_set_pin_function(PB09, PINMUX_PB09E_TC4_WO1);
+}
+
+void PWM_4_CLOCK_init(void)
+{
+
+	hri_mclk_set_APBCMASK_TC4_bit(MCLK);
+	hri_gclk_write_PCHCTRL_reg(GCLK, TC4_GCLK_ID, CONF_GCLK_TC4_SRC | (1 << GCLK_PCHCTRL_CHEN_Pos));
+}
+
+void PWM_4_init(void)
+{
+	PWM_4_CLOCK_init();
+	PWM_4_PORT_init();
+	pwm_init(&PWM_4, TC4, _tc_get_pwm());
+}
+
+void PWM_2_PORT_init(void)
+{
+
+	gpio_set_pin_function(PB15, PINMUX_PB15E_TC5_WO1);
+}
+
+void PWM_2_CLOCK_init(void)
+{
+
+	hri_mclk_set_APBCMASK_TC5_bit(MCLK);
+	hri_gclk_write_PCHCTRL_reg(GCLK, TC5_GCLK_ID, CONF_GCLK_TC5_SRC | (1 << GCLK_PCHCTRL_CHEN_Pos));
+}
+
+void PWM_2_init(void)
+{
+	PWM_2_CLOCK_init();
+	PWM_2_PORT_init();
+	pwm_init(&PWM_2, TC5, _tc_get_pwm());
+}
+
+void PWM_3_PORT_init(void)
+{
+
+	gpio_set_pin_function(PB03, PINMUX_PB03E_TC6_WO1);
+}
+
+void PWM_3_CLOCK_init(void)
+{
+
+	hri_mclk_set_APBDMASK_TC6_bit(MCLK);
+	hri_gclk_write_PCHCTRL_reg(GCLK, TC6_GCLK_ID, CONF_GCLK_TC6_SRC | (1 << GCLK_PCHCTRL_CHEN_Pos));
+}
+
+void PWM_3_init(void)
+{
+	PWM_3_CLOCK_init();
+	PWM_3_PORT_init();
+	pwm_init(&PWM_3, TC6, _tc_get_pwm());
 }
 
 void CAN_0_PORT_init(void)
@@ -303,11 +389,15 @@ void system_init(void)
 
 	TARGET_IO_init();
 
-	PWM_0_CLOCK_init();
-
-	PWM_0_PORT_init();
-
 	PWM_0_init();
+
+	PWM_1_init();
+
+	PWM_4_init();
+
+	PWM_2_init();
+
+	PWM_3_init();
 	CAN_0_init();
 
 	COMMUNICATION_IO_init();

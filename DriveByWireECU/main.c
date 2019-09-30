@@ -37,7 +37,7 @@
 #include "hal_delay.h"
 #include "hal_usart_sync.h""
 #include "DriveByWireIO.h"
-
+#include "driver_examples.h"
 
 /* define to avoid compilation warning */
 #define LWIP_TIMEVAL_PRIVATE 0
@@ -75,8 +75,8 @@ void print_ipaddress(void)
  {
 	//Calculate new outputs etc. Call SetBlah()...
 	//If an some output is complicated. i.e. something like a PID controller, make a new function or .c/.h file.
-
-	SetReverseDrive(inputs->reverse_commanded);
+	SetAcceleration(0.5f);
+	//SetReverseDrive(inputs->reverse_commanded);
 
 	return;
  }
@@ -93,6 +93,7 @@ int main(void)
 	int keep_running = 1;
 	unsigned long long current_time_us;
 	dbw_inputs_t* inputs = NULL;
+
 	while (keep_running)
 	{
 		//TODO: Calculate time elapsed in microseconds since last loop start
