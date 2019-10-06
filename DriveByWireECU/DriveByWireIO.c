@@ -10,6 +10,7 @@
 #include "hal_usart_sync.h"
 #include "hal_pwm.h"
 #include "driver_init.h"
+#include "main_context.h"
 
 //PWM clock is 12Mhz
 #define PWM_TICKS_PER_SECOND 0xB71B00
@@ -38,8 +39,6 @@ typedef union adc_val_t {
 	uint8_t ADC_Read_8[2];
 	uint16_t ADC_Read;
 } adc_val_t;
-
-dbw_inputs_t inputs;
 
 //interpolation table of steering positions[]
 const float steering_positions[] = {0, 1, 2};
@@ -85,23 +84,18 @@ float ReadSteeringPosition()
 	return 0.0f;
 }
 
-void ProcessCurrentInputs(double time_elapsed)
+void ProcessCurrentInputs(main_context_t* context)
 {
-	inputs.steering_position = ReadSteeringPosition();
-}
-
-dbw_inputs_t* GetCurrentInputs()
-{
-	return &inputs;
-}
-
-void ProcessCurrentOutputs(double time_elapsed)
-{
+	
+	//context->eth_outputs.steering_angle = ReadSteeringPosition();
 
 }
-void SendUpdateToPC()
-{
 
+void ProcessCurrentOutputs(main_context_t* context)
+{	
+
+	//TODO: Set outputs based on the current context state.
+		
 }
 
 //non-zero values turn lights on

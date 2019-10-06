@@ -63,7 +63,7 @@ void basic_socket()
 	                TASK_ETHERNETBASIC_STACK_SIZE,
 	                NULL,
 	                (TASK_ETHERNETBASIC_STACK_PRIORITY - 1),
-	                &xCreatedEthernetBasicTask)
+	                NULL)
 	    != pdPASS) {
 		while (1)
 			;

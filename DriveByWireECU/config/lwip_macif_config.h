@@ -89,7 +89,7 @@
 // <i> Static IP address
 // <id> macif_ip
 #ifndef CONF_TCPIP_STACK_INTERFACE_0_IP
-#define CONF_TCPIP_STACK_INTERFACE_0_IP "192.168.1.100"
+#define CONF_TCPIP_STACK_INTERFACE_0_IP "192.168.2.100"
 #endif
 
 // <s> Netmask Address
@@ -103,7 +103,7 @@
 // <i> Static Gateway Address
 // <id> macif_gateway
 #ifndef CONF_TCPIP_STACK_INTERFACE_0_GATEWAY
-#define CONF_TCPIP_STACK_INTERFACE_0_GATEWAY "192.168.1.1"
+#define CONF_TCPIP_STACK_INTERFACE_0_GATEWAY "192.168.2.1"
 #endif
 
 // </e>

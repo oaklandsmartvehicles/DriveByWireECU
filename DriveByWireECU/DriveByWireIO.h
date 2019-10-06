@@ -4,34 +4,13 @@
  * Created: 9/25/2019 7:52:07 PM
  *  Author: John Brooks
  */ 
+ #ifndef DRIVEBYWIREIO_H_
+ #define DRIVEBYWIREIO_H_
 
+ #include "main_context.h"
 
-#ifndef DRIVEBYWIREIO_H_
-#define DRIVEBYWIREIO_H_
-
-typedef struct dbw_inputs_t{
-	float wheel_speed_left;
-	float wheel_speed_right;
-	float steering_position;
-
-	//commanded values from driving agent rx'd over Ethernet
-	float vehicle_speed_commanded;
-	int reverse_commanded;
-	float steering_angle_commanded;
-	int parking_brake_commanded;
-	int safety_lights_1_on_commanded;
-	int safety_lights_2_on_commanded; 
-} dbw_inputs_t;
-
-typedef struct dbw_outputs{
-
-} dbw_outputs;
-
-
-void ProcessCurrentInputs(double time_elapsed);
-dbw_inputs_t* GetCurrentInputs();
-void ProcessCurrentOutputs(double time_elapsed);
-void SendUpdateToPC();
+void ProcessCurrentInputs(main_context_t* context);
+void ProcessCurrentOutputs(main_context_t* context);
 
 //non-zero values turn lights on
 void SetSafetyLight1On(int on);

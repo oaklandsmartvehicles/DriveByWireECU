@@ -35,12 +35,17 @@
 #include "lwip_socket_api.h"
 #include "hal_gpio.h"
 #include "hal_delay.h"
-#include "hal_usart_sync.h""
+#include "hal_usart_sync.h"
 #include "DriveByWireIO.h"
 #include "driver_examples.h"
+#include "EthernetIO.h"
+#include "FreeRTOS.h"
+#include "main_context.h"
 
 /* define to avoid compilation warning */
 #define LWIP_TIMEVAL_PRIVATE 0
+
+#define MAIN_TASK_LOOP_TIME 1 //milliseconds
 
 void print_ipaddress(void)
 {
@@ -52,65 +57,70 @@ void print_ipaddress(void)
 	printf("GATEWAY_IP : %s\r\n", ipaddr_ntoa_r((const ip_addr_t *)&(TCPIP_STACK_INTERFACE_0_desc.gw), tmp_buff, 16));
 }
 
-/*
- * NOTE:
- * If compilation results in error: "redefinition of 'struct timeval'",
- * perform below step to make compilation successful.
- *
- * Navigate to sockets.h file in $PROJECT_LOCAION$\lwip\lwip-1.4.0\src\include\lwip &
- * change the MACRO LWIP_TIMEVAL_PRIVATE like below
- *
- * #define LWIP_TIMEVAL_PRIVATE		1
- *				to
- * #define LWIP_TIMEVAL_PRIVATE		0
- *
- */
-
- unsigned long long GetCurrentTime()
+ uint32_t GetCurrentTime()
  {
-	//TODO: Implement mechanism to count time from clock ticks or timer or RTC, or something idk
+	return xTaskGetTickCount();
  }
 
- void ProcessAlgorithms(unsigned long long microseconds_elapsed, dbw_inputs_t* inputs)
+ void ProcessAlgorithms(main_context_t* ctx)
  {
 	//Calculate new outputs etc. Call SetBlah()...
 	//If an some output is complicated. i.e. something like a PID controller, make a new function or .c/.h file.
-	SetAcceleration(0.5f);
-	//SetReverseDrive(inputs->reverse_commanded);
+	SetAcceleration(ctx->vehicle_speed_commanded);
 
 	return;
  }
+
+void main_task(void* p)
+{
+	main_context_t* context = (main_context_t*)p;
+	while (1)
+	{
+		if(xSemaphoreTake(context->sem, 5) != pdTRUE)
+		{
+			printf("Failed to take IO semaphore!\n");
+			vTaskDelay(1);
+		}
+		
+		context->current_time = GetCurrentTime();
+		ProcessCurrentInputs(context);
+		ProcessAlgorithms(context);
+		ProcessCurrentOutputs(context);
+
+		xSemaphoreGive(context->sem);
+		vTaskDelay(MAIN_TASK_LOOP_TIME);
+	}
+}
 
 int main(void)
 {
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
 
-	/*Handles Socket API */
-	//printf("\r\nSocket API implementation\r\n");
-	//basic_socket();
+	static main_context_t ctx;
+	memset(&ctx, 0, sizeof(ctx));
+	ctx.sem = xSemaphoreCreateBinary();
+	xSemaphoreGive(ctx.sem);
 
-	int keep_running = 1;
-	unsigned long long current_time_us;
-	dbw_inputs_t* inputs = NULL;
+	xTaskCreate(ethernet_thread,
+		"Ethernet_Task",
+		2048,
+		&ctx,
+		0,
+		NULL);
 
-	while (keep_running)
-	{
-		//TODO: Calculate time elapsed in microseconds since last loop start
-		current_time_us = GetCurrentTime();
+	xTaskCreate(main_task,
+		"Main_Task",
+		2048,
+		&ctx,
+		2,
+		NULL);
 
-		ProcessCurrentInputs(current_time_us);
+	vTaskStartScheduler();
+	
+	//Should never reach here as vTaskStartScheduler is infinitely blocking
+	//If we DO reach here then there is insufficient RAM
+	printf("Insufficient RTOS heap available to create the idle or timer daemon tasks");
 
-		inputs = GetCurrentInputs();
-
-		ProcessAlgorithms(current_time_us, inputs);
-
-		ProcessCurrentOutputs(current_time_us);
-
-		SendUpdateToPC();
-
-		//arbitrary throttling of main loop. 
-		delay_us(100);
-	}
 	return 0;
 }
