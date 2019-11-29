@@ -41,6 +41,7 @@
 #include "EthernetIO.h"
 #include "FreeRTOS.h"
 #include "main_context.h"
+#include "PID.h"
 
 /* define to avoid compilation warning */
 #define LWIP_TIMEVAL_PRIVATE 0
@@ -50,6 +51,29 @@
 #define PARKING_BRAKE_DUTY_CYCLE 0.25
 #define COME_TO_STOP_BRAKE_DUTY_CYCLE 0.5
 #define EMERGENCY_STOP_BRAKE_DUTY_CYCLE 1.0
+
+#define MAX_STEERING_ANGLE 50.0
+#define MIN_STEERING_ANGLE -50.0
+
+#define MAX_VEHICLE_SPEED 12.0
+#define MIN_VEHICLE_SPEED -1.0
+
+#define MAX_STEERING_DUTY_CYCLE 1.0
+#define MAX_ACCEL_DUTY_CYCLE 1.0
+#define MIN_ACCEL_DUTY_CYCLE -0.25
+
+//duty cycle (0.0 - 1.0) / degrees
+#define STEERING_P_GAIN (1.0 / 30.0) //100% duty cycle at angles greater than 60 deg
+//duty cycle / degrees
+#define STEERING_I_GAIN (0.05 / (1 * 1000)) //5% duty cycle for every second we are 1 deg off.
+#define STEERING_D_GAIN 0.0
+
+//duty cycle (0.0 - 1.0) / m/s
+#define SPEED_P_GAIN (1.0 / 1.0) //100% duty cycle at speed errors > 2.2 MPH
+#define SPEED_I_GAIN (0.05 / (0.1 * 1000)) //5% duty cycle for every second we are .2 MPH off of our target.
+#define SPEED_D_GAIN 0.0
+
+static main_context_t ctx;
 
 void print_ipaddress(void)
 {
@@ -61,31 +85,56 @@ void print_ipaddress(void)
 	printf("GATEWAY_IP : %s\r\n", ipaddr_ntoa_r((const ip_addr_t *)&(TCPIP_STACK_INTERFACE_0_desc.gw), tmp_buff, 16));
 }
 
- uint32_t GetCurrentTime()
- {
+uint32_t GetCurrentTime()
+{
 	return xTaskGetTickCount();
+}
+int ConvertAngleToPIDInt(float angle)
+{
+	return (int)(angle * 1000.0);
+}
+int ConvertSpeedToPIDInt(float speed)
+{
+	return (int)(speed * 1000.0);
+}
+float ConvertPIDIntToDutyCycle(int PID_int)
+{
+	return ((float)PID_int) / 1000.0;
+}
+int ConvertDutyCycleToPIDInt(float duty_cycle)
+{
+	return ((int)duty_cycle) * 1000.0;
+}
+//PID Callback functions
+int SteeringPIDSource()
+{
+	return ConvertAngleToPIDInt(ctx.steering_angle_commanded);
+}
+int SpeedPIDSource()
+{
+	return ConvertSpeedToPIDInt(ctx.vehicle_speed_commanded);
+}
+void SteeringPIDOutput(int pid_output)
+{
+	ctx.steering_torque_pid_out = ConvertPIDIntToDutyCycle(pid_output);
+}
+void SpeedPIDOutput(int pid_output)
+{
+	ctx.acceleration_pid_out = ConvertPIDIntToDutyCycle(pid_output);
+}
+ unsigned long GetPIDTime()
+ {
+	return (unsigned long) GetCurrentTime();
  }
 
- float GetAccelerationFromPIDControl()
- {
-	return 0.0;
- }
- float GetSteeringTorqueFromPIDControl()
- {
-	return 0.0;
- }
- void UpdateSteeringPIDInputs(float target, float current)
- {
-
- }
- void UpdateAccelerationPIDInputs(float target, float current)
- {
-
- }
 
  void ProcessAlgorithms(main_context_t* ctx)
  {
 	ctx->estop_indicator = 0;
+	setEnabled(&ctx->steering_controller, ctx->autonomous_mode && !ctx->estop_in && !ctx->park_brake_commanded);
+	setEnabled(&ctx->speed_controller, ctx->autonomous_mode && !ctx->estop_in && !ctx->park_brake_commanded);
+	tick(&ctx->steering_controller);
+	tick(&ctx->speed_controller);
 
 	if( ctx->last_eth_input_rx_time - ctx->current_time > 250)
 	{
@@ -97,9 +146,6 @@ void print_ipaddress(void)
 	{
 		SetEStopState(ctx->estop_in);
 		SetSafetyLight1On(1);
-		UpdateSteeringPIDInputs(ctx->steering_angle_commanded, ctx->steering_angle);
-		UpdateAccelerationPIDInputs(ctx->vehicle_speed_commanded, ctx->vehicle_speed);
-
 		
 		if(ctx->estop_in)
 		{
@@ -115,7 +161,7 @@ void print_ipaddress(void)
 		else
 		{
 			//regular autonomous mode
-			float accel = GetAccelerationFromPIDControl();
+			float accel = ctx->acceleration_pid_out;
 			
 			//if reverse commanded
 			if( accel < 0.0 )
@@ -141,7 +187,7 @@ void print_ipaddress(void)
 				accel = 1.0;
 			SetAcceleration( accel );
 
-			float SteeringTorqueFromPID = GetSteeringTorqueFromPIDControl();
+			float SteeringTorqueFromPID = ctx->steering_torque_pid_out;
 			SetSteerDirection(SteeringTorqueFromPID < 0.0);
 
 			//limit the torque 0 to 1
@@ -164,7 +210,8 @@ void print_ipaddress(void)
 
 void main_task(void* p)
 {
-	main_context_t* context = (main_context_t*)p;
+	main_context_t* context = (main_context_t*)p; 
+	
 	while (1)
 	{
 		if(xSemaphoreTake(context->sem, 5) != pdTRUE)
@@ -187,8 +234,26 @@ int main(void)
 {
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
+	
+	//Initialize PID controllers.
+	ctx.steering_controller.p = STEERING_P_GAIN;
+	ctx.steering_controller.i = STEERING_I_GAIN;
+	ctx.steering_controller.d = STEERING_D_GAIN;
+	ctx.steering_controller.pidSource = SteeringPIDSource;
+	ctx.steering_controller.pidOutput = SteeringPIDOutput;
+	setInputBounds(&(ctx.steering_controller), ConvertAngleToPIDInt(MIN_STEERING_ANGLE), ConvertAngleToPIDInt(MAX_STEERING_ANGLE));
+	setOutputBounds(&(ctx.steering_controller), ConvertDutyCycleToPIDInt(MAX_STEERING_DUTY_CYCLE)*-1, ConvertDutyCycleToPIDInt(MAX_STEERING_DUTY_CYCLE));
+	ctx.steering_controller.getSystemTime = GetPIDTime;
 
-	static main_context_t ctx;
+	ctx.speed_controller.p = SPEED_P_GAIN;
+	ctx.speed_controller.i = SPEED_I_GAIN;
+	ctx.speed_controller.d = SPEED_D_GAIN;
+	ctx.speed_controller.pidSource = SpeedPIDSource;
+	ctx.speed_controller.pidOutput = SpeedPIDOutput;
+	setInputBounds(&(ctx.speed_controller), ConvertSpeedToPIDInt(MIN_VEHICLE_SPEED), ConvertSpeedToPIDInt(MAX_VEHICLE_SPEED));
+	setOutputBounds(&(ctx.speed_controller), ConvertDutyCycleToPIDInt(MIN_ACCEL_DUTY_CYCLE), ConvertDutyCycleToPIDInt(MAX_ACCEL_DUTY_CYCLE));
+	ctx.speed_controller.getSystemTime = GetPIDTime;
+	
 	memset(&ctx, 0, sizeof(ctx));
 	ctx.sem = xSemaphoreCreateBinary();
 	xSemaphoreGive(ctx.sem);

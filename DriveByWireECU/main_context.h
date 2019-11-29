@@ -9,6 +9,7 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "EthernetIO.h"
+#include "PID.h"
 
 typedef struct main_context_t
 {
@@ -35,6 +36,11 @@ typedef struct main_context_t
 	uint8_t pc_comm_active;
 	uint8_t debug_led_1;
 	uint8_t debug_led_2;
+
+	PIDController steering_controller;
+	PIDController speed_controller;
+	float steering_torque_pid_out;
+	float acceleration_pid_out;
 } main_context_t;
 
 #endif /* MAIN_CONTEXT_H_ */
