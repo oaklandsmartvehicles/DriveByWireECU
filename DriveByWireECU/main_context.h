@@ -22,8 +22,6 @@ typedef struct main_context_t
 	float steering_angle_commanded;
 	uint8_t park_brake_commanded;
 	uint8_t reverse_commanded;
-	uint8_t safety_lights_1_on_commanded;
-	uint8_t safety_lights_2_on_commanded;
 	uint8_t autonomous_mode;
 
 	//actual measured / current values 
@@ -37,7 +35,6 @@ typedef struct main_context_t
 	uint8_t pc_comm_active;
 	uint8_t debug_led_1;
 	uint8_t debug_led_2;
-	 
 } main_context_t;
 
 #endif /* MAIN_CONTEXT_H_ */

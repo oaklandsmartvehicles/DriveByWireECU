@@ -23,8 +23,7 @@ typedef struct EthernetInputs_t
 	//Decoding:
 	//	0x1:	parking_brake_commanded 
 	//	0x2:	reverse_commanded
-	//	0x4:	safety_lights_1_on_commanded 
-	//	0x8:	safety_lights_2_on_commanded
+	//	0x4:	autonomous mode 
 	uint8_t boolean_commands;	
 
 } EthernetInputs;
@@ -39,6 +38,10 @@ typedef struct EthernetOutputs_t
 	
 	//Encoding: value / 0.1 (degrees)
 	uint16_t steering_angle;	
+
+	//Decoding:
+	//	0x1:	estop_state
+	uint8_t boolean_states;
 } EthernetOutputs;
 
 void ethernet_thread(void *p);

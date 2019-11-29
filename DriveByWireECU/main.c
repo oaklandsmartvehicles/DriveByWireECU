@@ -48,8 +48,8 @@
 #define MAIN_TASK_LOOP_TIME 1 //milliseconds
 
 #define PARKING_BRAKE_DUTY_CYCLE 0.25
-#define COME_TO_STOP_BRAKE_DUTY_CYCLE 0.5;
-#define EMERGENCY_STOP_BRAKE_DUTY_CYCLE 1.0;
+#define COME_TO_STOP_BRAKE_DUTY_CYCLE 0.5
+#define EMERGENCY_STOP_BRAKE_DUTY_CYCLE 1.0
 
 void print_ipaddress(void)
 {

@@ -43,15 +43,16 @@ void decode_ethernet_inputs(EthernetInputs* inputs, main_context_t* ctx)
 {
 	ctx->steering_angle_commanded = (float)inputs->steering_angle_commanded * 0.1;
 	ctx->vehicle_speed_commanded = (float)inputs->vehicle_speed_commanded * 0.01;
-	ctx->parking_brake_commanded = (inputs->boolean_commands & 0x1) != 0;
+	ctx->park_brake_commanded = (inputs->boolean_commands & 0x1) != 0;
 	ctx->reverse_commanded = (inputs->boolean_commands & 0x2) != 0;
-	ctx->safety_lights_1_on_commanded = (inputs->boolean_commands & 0x4) != 0;
-	ctx->safety_lights_2_on_commanded = (inputs->boolean_commands & 0x8) != 0;
+	ctx->autonomous_mode = (inputs->boolean_commands & 0x4) != 0;
 }
 void encode_ethernet_outputs(EthernetOutputs* outputs, main_context_t* ctx)
 {
 	outputs->steering_angle = ctx->steering_angle / 0.1;
 	outputs->vehicle_speed = ctx->vehicle_speed / 0.01;
+	outputs->boolean_states = 0;
+	outputs->boolean_states |= ctx->estop_in > 0;
 }
 
 void ethernet_thread(void *p)
