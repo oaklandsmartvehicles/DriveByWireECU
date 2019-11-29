@@ -1587,30 +1587,43 @@ drivers:
     clocks:
       domain_group: null
 pads:
-  SafetyLights1On:
+  AccelerationEnable:
     name: PC01
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC01
     mode: Digital output
-    user_label: SafetyLights1On
+    user_label: AccelerationEnable
     configuration: null
-  WheelSpeed:
+  EStop_In:
+    name: PC03
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC03
+    mode: Digital input
+    user_label: EStop_In
+    configuration:
+      pad_pull_config: Pull-down
+  LED2:
+    name: PB05
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB05
+    mode: Digital output
+    user_label: LED2
+    configuration: null
+  WheelSpeedRight:
     name: PD00
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PD00
     mode: Digital input
-    user_label: WheelSpeed
+    user_label: WheelSpeedRight
     configuration:
       pad_pull_config: Pull-down
-  SafetyLights2On:
+  SafetyLights1Enable:
     name: PB06
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB06
     mode: Digital output
-    user_label: SafetyLights2On
+    user_label: SafetyLights1Enable
     configuration: null
-  WheelSpeed2:
+  WheelSpeedLeft:
     name: PB07
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB07
     mode: Digital input
-    user_label: WheelSpeed2
+    user_label: WheelSpeedLeft
     configuration:
       pad_pull_config: Pull-down
   SteeringPosition:
@@ -1631,17 +1644,24 @@ pads:
     mode: Peripheral IO
     user_label: PA05
     configuration: null
-  SteerLeft:
+  SteeringEnable:
     name: PA06
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PA06
     mode: Digital output
-    user_label: SteerLeft
-    configuration: null
-  SteerRight:
+    user_label: SteeringEnable
+    configuration:
+      pad_initial_level: Low
+  SteeringDirection:
     name: PA07
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PA07
     mode: Digital output
-    user_label: SteerRight
+    user_label: SteeringDirection
+    configuration: null
+  EStopState:
+    name: PC06
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC06
+    mode: Digital output
+    user_label: EStopState
     configuration: null
   PB12:
     name: PB12
@@ -1661,11 +1681,11 @@ pads:
     mode: Peripheral IO
     user_label: PB15
     configuration: null
-  SafetyLights1Mode:
+  NotReverse:
     name: PC10
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC10
     mode: Digital output
-    user_label: SafetyLights1Mode
+    user_label: NotReverse
     configuration: null
   PC11:
     name: PC11
@@ -1678,6 +1698,12 @@ pads:
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC12
     mode: Peripheral IO
     user_label: PC12
+    configuration: null
+  PCComm:
+    name: PC14
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC14
+    mode: Digital output
+    user_label: PCComm
     configuration: null
   PA12:
     name: PA12
@@ -1721,11 +1747,11 @@ pads:
     mode: Peripheral IO
     user_label: PA19
     configuration: null
-  LED_0:
+  LED0:
     name: PC18
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC18
     mode: Digital output
-    user_label: LED_0
+    user_label: LED0
     configuration:
       pad_initial_level: High
   PC20:
@@ -1746,17 +1772,23 @@ pads:
     mode: Peripheral IO
     user_label: PB25
     configuration: null
-  ReverseDrive:
+  LED1:
+    name: PB28
+    definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB28
+    mode: Digital output
+    user_label: LED1
+    configuration: null
+  Reverse:
     name: PC30
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PC30
     mode: Digital output
-    user_label: ReverseDrive
+    user_label: Reverse
     configuration: null
-  SafetyLights2Mode:
+  SafetyLights2Enable:
     name: PB01
     definition: Atmel:SAME54_Drivers:0.0.1::SAME54P20A-AU::pad::PB01
     mode: Digital output
-    user_label: SafetyLights2Mode
+    user_label: SafetyLights2Enable
     configuration: null
   PB03:
     name: PB03

@@ -47,6 +47,10 @@
 
 #define MAIN_TASK_LOOP_TIME 1 //milliseconds
 
+#define PARKING_BRAKE_DUTY_CYCLE 0.25
+#define COME_TO_STOP_BRAKE_DUTY_CYCLE 0.5;
+#define EMERGENCY_STOP_BRAKE_DUTY_CYCLE 1.0;
+
 void print_ipaddress(void)
 {
 	static char tmp_buff[16];
@@ -62,13 +66,100 @@ void print_ipaddress(void)
 	return xTaskGetTickCount();
  }
 
+ float GetAccelerationFromPIDControl()
+ {
+	return 0.0;
+ }
+ float GetSteeringTorqueFromPIDControl()
+ {
+	return 0.0;
+ }
+ void UpdateSteeringPIDInputs(float target, float current)
+ {
+
+ }
+ void UpdateAccelerationPIDInputs(float target, float current)
+ {
+
+ }
+
  void ProcessAlgorithms(main_context_t* ctx)
  {
-	//Calculate new outputs etc. Call SetBlah()...
-	//If an some output is complicated. i.e. something like a PID controller, make a new function or .c/.h file.
-	SetAcceleration(ctx->vehicle_speed_commanded);
+	ctx->estop_indicator = 0;
 
-	return;
+	if( ctx->last_eth_input_rx_time - ctx->current_time > 250)
+	{
+		ctx->pc_comm_active = 0;
+		ctx->autonomous_mode = 0;
+	}
+	
+	if(ctx->autonomous_mode)
+	{
+		SetEStopState(ctx->estop_in);
+		SetSafetyLight1On(1);
+		UpdateSteeringPIDInputs(ctx->steering_angle_commanded, ctx->steering_angle);
+		UpdateAccelerationPIDInputs(ctx->vehicle_speed_commanded, ctx->vehicle_speed);
+
+		
+		if(ctx->estop_in)
+		{
+			SetFrontBrake(EMERGENCY_STOP_BRAKE_DUTY_CYCLE);
+			SetAcceleration(0.0);
+			ctx->estop_indicator = 1;
+		}
+		else if(ctx->park_brake_commanded)
+		{
+			SetFrontBrake(PARKING_BRAKE_DUTY_CYCLE);
+			SetAcceleration(0.0);
+		}
+		else
+		{
+			//regular autonomous mode
+			float accel = GetAccelerationFromPIDControl();
+			
+			//if reverse commanded
+			if( accel < 0.0 )
+			{
+				//if we are moving forward
+				if(ctx->vehicle_speed > 0)
+				{
+					//Don't engage reverse while we are moving forward.
+					accel = 0.0;
+					SetFrontBrake(COME_TO_STOP_BRAKE_DUTY_CYCLE);
+				}
+				else //not moving forward and reverse commanded
+				{
+					SetReverseDrive(1);
+					accel = -accel;
+				}
+			}
+			else //reverse not commanded
+			{
+				SetReverseDrive(0);
+			}
+			if( accel > 1.0)
+				accel = 1.0;
+			SetAcceleration( accel );
+
+			float SteeringTorqueFromPID = GetSteeringTorqueFromPIDControl();
+			SetSteerDirection(SteeringTorqueFromPID < 0.0);
+
+			//limit the torque 0 to 1
+			if( SteeringTorqueFromPID < 0.0 )
+				SteeringTorqueFromPID = -SteeringTorqueFromPID;
+			if( SteeringTorqueFromPID > 1.0 )
+				SteeringTorqueFromPID = 1.0;
+
+			SetSteeringTorque( SteeringTorqueFromPID );
+		}
+	}
+	else //not in autonomous mode
+	{
+		SetSafetyLight1On(0);
+		SetSteeringTorque(0.0);
+		SetAcceleration(0.0);
+		SetReverseDrive(0);
+	}
  }
 
 void main_task(void* p)

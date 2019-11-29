@@ -30,7 +30,7 @@
 #define PWM_Acceleration PWM_0		//PA05
 #define PWM_SteeringTorque PWM_4	//PB09
 #define PWM_FrontBrake PWM_2		//PB15
-#define PWM_RearBrake PWM_3			//PB03
+//#define PWM_RearBrake PWM_3			//PB03
 
 //rename this if used for something. For now PWM_4 is just an available pin.
 #define PWM_ExtraPWM PWM_4
@@ -86,49 +86,40 @@ float ReadSteeringPosition()
 
 void ProcessCurrentInputs(main_context_t* context)
 {
-	
-	//context->eth_outputs.steering_angle = ReadSteeringPosition();
-
+	context->estop_in = !gpio_get_pin_level(EStop_In);
+	context->steering_angle = ReadSteeringPosition();
 }
 
 void ProcessCurrentOutputs(main_context_t* context)
 {	
-
-	//TODO: Set outputs based on the current context state.
-		
+	SetPCComm(context->pc_comm_active);
+	SetDebugLED1(context->debug_led_1);
+	SetDebugLED2(context->debug_led_1);
+	SetEStopState(context->estop_indicator);
 }
 
 //non-zero values turn lights on
 void SetSafetyLight1On(int on)
 {
-	gpio_set_pin_level(SafetyLights1On, on);
+	gpio_set_pin_level(SafetyLights1Enable, on);
 }
 void SetSafetyLight2On(int on)
 {
-	gpio_set_pin_level(SafetyLights2On, on);
-}
-
-//Cycles safety light mode pin until the desired mode is achieved.
-void SetSafetyLight1Mode(int mode)
-{
-
-}
-void SetSafetyLight2Mode(int mode)
-{
-
+	gpio_set_pin_level(SafetyLights2Enable, on);
 }
 
 //non zero values steer right, zero steers left.
 void SetSteerDirection(int right)
 {
-	gpio_set_pin_level(SteerRight, right);
-	gpio_set_pin_level(SteerLeft, !right);
+	gpio_set_pin_level(SteeringDirection, right);
 }
 
 //Puts the vehicle in reverse if value is non-zero.
 void SetReverseDrive(int reverse)
 {
-	gpio_set_pin_level(ReverseDrive, reverse);
+	gpio_set_pin_level(Reverse, reverse);
+	gpio_set_pin_level(NotReverse, !reverse);
+	SetSafetyLight2On(reverse);
 }
 
 //Applies power to the steering motor as duty cycle percentage
@@ -137,6 +128,8 @@ void SetSteeringTorque(float duty_cycle)
 	const static int STEERING_TORQUE_FREQ_TICKS = PWM_TICKS_PER_SECOND / STEERING_TORQUE_FREQ;
 	pwm_set_parameters(&PWM_SteeringTorque, STEERING_TORQUE_FREQ_TICKS, duty_cycle * STEERING_TORQUE_FREQ_TICKS);
 	pwm_enable(&PWM_SteeringTorque);
+
+	gpio_set_pin_level(SteeringEnable, duty_cycle > 0.0);
 }
 
  //Sets the front brake PWM as duty cycle percentage.
@@ -147,19 +140,40 @@ void SetSteeringTorque(float duty_cycle)
 	pwm_enable(&PWM_FrontBrake);
  }
 
- //Sets the rear drum brake PWM to the engaged position if value is non-zero
- void SetParkingBrake(int engaged)
- {
-	const static int REAR_BRAKE_FREQ_TICKS = PWM_TICKS_PER_SECOND / REAR_BRAKE_FREQ;
-	float duty_cycle = engaged ? REAR_BRAKE_ENGAGED_DUTY_CYCLE : REAR_BRAKE_DISENGAGED_DUTY_CYCLE;
-	pwm_set_parameters(&PWM_RearBrake, REAR_BRAKE_FREQ_TICKS, duty_cycle * REAR_BRAKE_FREQ_TICKS);
-	pwm_enable(&PWM_RearBrake);
- }
-
 //Sets the acceleration value to the specified duty cycle
 void SetAcceleration(float duty_cycle)
 {
 	const static int ACCELERATION_FREQ_TICKS = PWM_TICKS_PER_SECOND / ACCELERATION_FREQ;
 	pwm_set_parameters(&PWM_Acceleration, ACCELERATION_FREQ_TICKS, duty_cycle * ACCELERATION_FREQ_TICKS);
 	pwm_enable(&PWM_Acceleration);
+
+	if(duty_cycle > 0)
+	{
+		gpio_set_pin_level(AccelerationEnable, 1);
+	}
+	else
+	{
+		gpio_set_pin_level(AccelerationEnable, 0);
+	}
+}
+
+//Non-zero values turns the PC Comm LED ON.
+void SetPCComm(int active)
+{
+	gpio_set_pin_level(PCComm, active);
+}
+
+//non-zero values turns the EStop LED ON.
+void SetEStopState(int active)
+{
+	gpio_set_pin_level(EStopState, active);
+}
+//non-zero values turns on the debug LEDs.
+void SetDebugLED1(int active)
+{
+	gpio_set_pin_level(LED1, active);
+}
+void SetDebugLED2(int active)
+{
+	gpio_set_pin_level(LED2, active);
 }

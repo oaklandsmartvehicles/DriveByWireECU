@@ -10,7 +10,6 @@
 #include <peripheral_clk_config.h>
 #include <utils.h>
 #include <hal_init.h>
-#include <hal_usart_sync.h>
 
 #include <hpl_adc_base.h>
 
@@ -52,7 +51,6 @@ void ADC_0_init(void)
 	ADC_0_CLOCK_init();
 	ADC_0_PORT_init();
 	adc_sync_init(&ADC_0, ADC1, (void *)NULL);
-	adc_sync_enable_channel(&ADC_0, 0);
 }
 
 void TARGET_IO_PORT_init(void)
@@ -245,7 +243,7 @@ void system_init(void)
 
 	// GPIO on PA06
 
-	gpio_set_pin_level(SteerLeft,
+	gpio_set_pin_level(SteeringEnable,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
@@ -253,13 +251,13 @@ void system_init(void)
 	                   false);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(SteerLeft, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(SteeringEnable, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(SteerLeft, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(SteeringEnable, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PA07
 
-	gpio_set_pin_level(SteerRight,
+	gpio_set_pin_level(SteeringDirection,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
@@ -267,13 +265,13 @@ void system_init(void)
 	                   false);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(SteerRight, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(SteeringDirection, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(SteerRight, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(SteeringDirection, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PB01
 
-	gpio_set_pin_level(SafetyLights2Mode,
+	gpio_set_pin_level(SafetyLights2Enable,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
@@ -281,13 +279,27 @@ void system_init(void)
 	                   false);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(SafetyLights2Mode, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(SafetyLights2Enable, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(SafetyLights2Mode, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(SafetyLights2Enable, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PB05
+
+	gpio_set_pin_level(LED2,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   false);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(LED2, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(LED2, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PB06
 
-	gpio_set_pin_level(SafetyLights2On,
+	gpio_set_pin_level(SafetyLights1Enable,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
@@ -295,16 +307,16 @@ void system_init(void)
 	                   false);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(SafetyLights2On, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(SafetyLights1Enable, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(SafetyLights2On, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(SafetyLights1Enable, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PB07
 
 	// Set pin direction to input
-	gpio_set_pin_direction(WheelSpeed2, GPIO_DIRECTION_IN);
+	gpio_set_pin_direction(WheelSpeedLeft, GPIO_DIRECTION_IN);
 
-	gpio_set_pin_pull_mode(WheelSpeed2,
+	gpio_set_pin_pull_mode(WheelSpeedLeft,
 	                       // <y> Pull configuration
 	                       // <id> pad_pull_config
 	                       // <GPIO_PULL_OFF"> Off
@@ -312,11 +324,25 @@ void system_init(void)
 	                       // <GPIO_PULL_DOWN"> Pull-down
 	                       GPIO_PULL_DOWN);
 
-	gpio_set_pin_function(WheelSpeed2, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(WheelSpeedLeft, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PB28
+
+	gpio_set_pin_level(LED1,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   false);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(LED1, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(LED1, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PC01
 
-	gpio_set_pin_level(SafetyLights1On,
+	gpio_set_pin_level(AccelerationEnable,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
@@ -324,13 +350,42 @@ void system_init(void)
 	                   false);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(SafetyLights1On, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(AccelerationEnable, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(SafetyLights1On, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(AccelerationEnable, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PC03
+
+	// Set pin direction to input
+	gpio_set_pin_direction(EStop_In, GPIO_DIRECTION_IN);
+
+	gpio_set_pin_pull_mode(EStop_In,
+	                       // <y> Pull configuration
+	                       // <id> pad_pull_config
+	                       // <GPIO_PULL_OFF"> Off
+	                       // <GPIO_PULL_UP"> Pull-up
+	                       // <GPIO_PULL_DOWN"> Pull-down
+	                       GPIO_PULL_DOWN);
+
+	gpio_set_pin_function(EStop_In, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PC06
+
+	gpio_set_pin_level(EStopState,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   false);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(EStopState, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(EStopState, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PC10
 
-	gpio_set_pin_level(SafetyLights1Mode,
+	gpio_set_pin_level(NotReverse,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
@@ -338,13 +393,27 @@ void system_init(void)
 	                   false);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(SafetyLights1Mode, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(NotReverse, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(SafetyLights1Mode, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(NotReverse, GPIO_PIN_FUNCTION_OFF);
+
+	// GPIO on PC14
+
+	gpio_set_pin_level(PCComm,
+	                   // <y> Initial level
+	                   // <id> pad_initial_level
+	                   // <false"> Low
+	                   // <true"> High
+	                   false);
+
+	// Set pin direction to output
+	gpio_set_pin_direction(PCComm, GPIO_DIRECTION_OUT);
+
+	gpio_set_pin_function(PCComm, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PC18
 
-	gpio_set_pin_level(LED_0,
+	gpio_set_pin_level(LED0,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
@@ -352,13 +421,13 @@ void system_init(void)
 	                   true);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(LED_0, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(LED0, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(LED_0, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(LED0, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PC30
 
-	gpio_set_pin_level(ReverseDrive,
+	gpio_set_pin_level(Reverse,
 	                   // <y> Initial level
 	                   // <id> pad_initial_level
 	                   // <false"> Low
@@ -366,16 +435,16 @@ void system_init(void)
 	                   false);
 
 	// Set pin direction to output
-	gpio_set_pin_direction(ReverseDrive, GPIO_DIRECTION_OUT);
+	gpio_set_pin_direction(Reverse, GPIO_DIRECTION_OUT);
 
-	gpio_set_pin_function(ReverseDrive, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(Reverse, GPIO_PIN_FUNCTION_OFF);
 
 	// GPIO on PD00
 
 	// Set pin direction to input
-	gpio_set_pin_direction(WheelSpeed, GPIO_DIRECTION_IN);
+	gpio_set_pin_direction(WheelSpeedRight, GPIO_DIRECTION_IN);
 
-	gpio_set_pin_pull_mode(WheelSpeed,
+	gpio_set_pin_pull_mode(WheelSpeedRight,
 	                       // <y> Pull configuration
 	                       // <id> pad_pull_config
 	                       // <GPIO_PULL_OFF"> Off
@@ -383,7 +452,7 @@ void system_init(void)
 	                       // <GPIO_PULL_DOWN"> Pull-down
 	                       GPIO_PULL_DOWN);
 
-	gpio_set_pin_function(WheelSpeed, GPIO_PIN_FUNCTION_OFF);
+	gpio_set_pin_function(WheelSpeedRight, GPIO_PIN_FUNCTION_OFF);
 
 	ADC_0_init();
 

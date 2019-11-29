@@ -20,18 +20,23 @@ typedef struct main_context_t
 	//commanded from the driving agent
 	float vehicle_speed_commanded;
 	float steering_angle_commanded;
-	uint8_t parking_brake_commanded;
+	uint8_t park_brake_commanded;
 	uint8_t reverse_commanded;
 	uint8_t safety_lights_1_on_commanded;
 	uint8_t safety_lights_2_on_commanded;
+	uint8_t autonomous_mode;
 
 	//actual measured / current values 
 	float vehicle_speed;
 	float steering_angle;
-	uint8_t parking_brake;
 	uint8_t reverse;
 	uint8_t safety_lights_1_on;
 	uint8_t safety_lights_2_on;
+	uint8_t estop_in;
+	uint8_t estop_indicator;
+	uint8_t pc_comm_active;
+	uint8_t debug_led_1;
+	uint8_t debug_led_2;
 	 
 } main_context_t;
 

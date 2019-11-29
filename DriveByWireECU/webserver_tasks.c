@@ -50,7 +50,7 @@ static void led_task(void *p)
 {
 	(void)p;
 	for (;;) {
-		gpio_toggle_pin_level(LED_0);
+		gpio_toggle_pin_level(LED0);
 		os_sleep(led_blink_rate);
 	}
 }

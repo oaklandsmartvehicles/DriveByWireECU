@@ -16,10 +16,6 @@ void ProcessCurrentOutputs(main_context_t* context);
 void SetSafetyLight1On(int on);
 void SetSafetyLight2On(int on);
 
-//Cycles safety light mode pin until the desired mode is achieved.
-void SetSafetyLight1Mode(int mode);
-void SetSafetyLight2Mode(int mode);
-
 //non zero values steer right, zero steers left.
 void SetAcceleration(float duty_cycle);
 
@@ -35,7 +31,14 @@ void SetReverseDrive(int reverse);
 //Sets the front brake PWM as duty cycle percentage.
 void SetFrontBrake(float duty_cycle);
 
-//Sets the rear drum brake PWM to the engaged position if value is non-zero
-void SetParkingBrake(int engaged);
+//Non-zero values turns the PC Comm LED ON.
+void SetPCComm(int active);
+
+//non-zero values turns the EStop LED ON.
+void SetEStopState(int active);
+
+//non-zero values turns on the debug LEDs.
+void SetDebugLED1(int active);
+void SetDebugLED2(int active);
 
 #endif /* DRIVEBYWIREIO_H_ */
