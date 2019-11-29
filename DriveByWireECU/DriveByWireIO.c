@@ -17,7 +17,7 @@
 
 //PWM Frequency in Hz
 #define VEHICLE_SPEED_FREQ 1000
-#define STEERING_TORQUE_FREQ 1000
+#define STEERING_TORQUE_FREQ 30000
 #define FRONT_BRAKE_FREQ 1000
 #define REAR_BRAKE_FREQ 1000
 #define ACCELERATION_FREQ 1000
@@ -27,10 +27,10 @@
 #define REAR_BRAKE_DISENGAGED_DUTY_CYCLE 0.0f
 
 //Mapping of PWM to Outputs
-#define PWM_Acceleration PWM_0
-#define PWM_SteeringTorque PWM_1
-#define PWM_FrontBrake PWM_2
-#define PWM_RearBrake PWM_3
+#define PWM_Acceleration PWM_0		//PA05
+#define PWM_SteeringTorque PWM_4	//PB09
+#define PWM_FrontBrake PWM_2		//PB15
+#define PWM_RearBrake PWM_3			//PB03
 
 //rename this if used for something. For now PWM_4 is just an available pin.
 #define PWM_ExtraPWM PWM_4
@@ -134,7 +134,7 @@ void SetReverseDrive(int reverse)
 //Applies power to the steering motor as duty cycle percentage
 void SetSteeringTorque(float duty_cycle)
 {
-	const static int STEERING_TORQUE_FREQ_TICKS = PWM_TICKS_PER_SECOND / REAR_BRAKE_FREQ;
+	const static int STEERING_TORQUE_FREQ_TICKS = PWM_TICKS_PER_SECOND / STEERING_TORQUE_FREQ;
 	pwm_set_parameters(&PWM_SteeringTorque, STEERING_TORQUE_FREQ_TICKS, duty_cycle * STEERING_TORQUE_FREQ_TICKS);
 	pwm_enable(&PWM_SteeringTorque);
 }
@@ -142,7 +142,7 @@ void SetSteeringTorque(float duty_cycle)
  //Sets the front brake PWM as duty cycle percentage.
  void SetFrontBrake(float duty_cycle)
  {
-	const static int FRONT_BRAKE_FREQ_TICKS = PWM_TICKS_PER_SECOND / REAR_BRAKE_FREQ;
+	const static int FRONT_BRAKE_FREQ_TICKS = PWM_TICKS_PER_SECOND / FRONT_BRAKE_FREQ;
 	pwm_set_parameters(&PWM_FrontBrake, FRONT_BRAKE_FREQ_TICKS, duty_cycle * FRONT_BRAKE_FREQ_TICKS);
 	pwm_enable(&PWM_FrontBrake);
  }
