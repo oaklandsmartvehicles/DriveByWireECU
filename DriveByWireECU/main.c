@@ -122,15 +122,29 @@ void SpeedPIDOutput(int pid_output)
 {
 	ctx.acceleration_pid_out = ConvertPIDIntToDutyCycle(pid_output);
 }
- unsigned long GetPIDTime()
- {
+unsigned long GetPIDTime()
+{
 	return (unsigned long) GetCurrentTime();
- }
+}
+void OverridePID()
+{
+	if( !ctx.override_pid )
+		return;
+
+	ctx.speed_controller.p = ctx.speed_p_gain_override;
+	ctx.speed_controller.i = ctx.speed_i_gain_override;
+	ctx.speed_controller.d = ctx.speed_d_gain_override;
+
+	ctx.steering_controller.p = ctx.steer_p_gain_override;
+	ctx.steering_controller.i = ctx.steer_i_gain_override;
+	ctx.steering_controller.d = ctx.steer_d_gain_override;
+}
 
 
- void ProcessAlgorithms(main_context_t* ctx)
- {
+void ProcessAlgorithms(main_context_t* ctx)
+{
 	ctx->estop_indicator = 0;
+	OverridePID();
 	setEnabled(&ctx->steering_controller, ctx->autonomous_mode && !ctx->estop_in && !ctx->park_brake_commanded);
 	setEnabled(&ctx->speed_controller, ctx->autonomous_mode && !ctx->estop_in && !ctx->park_brake_commanded);
 	tick(&ctx->steering_controller);
@@ -206,7 +220,8 @@ void SpeedPIDOutput(int pid_output)
 		SetAcceleration(0.0);
 		SetReverseDrive(0);
 	}
- }
+}
+
 
 void main_task(void* p)
 {

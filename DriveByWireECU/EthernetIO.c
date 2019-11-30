@@ -46,13 +46,27 @@ void decode_ethernet_inputs(EthernetInputs* inputs, main_context_t* ctx)
 	ctx->park_brake_commanded = (inputs->boolean_commands & 0x1) != 0;
 	ctx->reverse_commanded = (inputs->boolean_commands & 0x2) != 0;
 	ctx->autonomous_mode = (inputs->boolean_commands & 0x4) != 0;
+	ctx->override_pid = (inputs->boolean_commands & 0x8) != 0;
+	ctx->speed_p_gain_override = (float)inputs->speed_p_gain * 0.000001;
+	ctx->speed_i_gain_override = (float)inputs->speed_i_gain * 0.000001;
+	ctx->speed_d_gain_override = (float)inputs->speed_d_gain * 0.000001;
+	ctx->steer_p_gain_override = (float)inputs->steering_p_gain * 0.000001;
+	ctx->steer_i_gain_override = (float)inputs->steering_i_gain * 0.000001;
+	ctx->steer_d_gain_override = (float)inputs->steering_d_gain * 0.000001;
+
 }
 void encode_ethernet_outputs(EthernetOutputs* outputs, main_context_t* ctx)
 {
-	outputs->steering_angle = ctx->steering_angle / 0.1;
-	outputs->vehicle_speed = ctx->vehicle_speed / 0.01;
+	outputs->steering_angle = ctx->steering_angle * 10;
+	outputs->vehicle_speed = ctx->vehicle_speed * 100;
 	outputs->boolean_states = 0;
 	outputs->boolean_states |= ctx->estop_in > 0;
+	outputs->speed_p_term = ctx->speed_controller.lastPTerm;
+	outputs->speed_i_term = ctx->speed_controller.lastITerm;
+	outputs->speed_d_term = ctx->speed_controller.lastDTerm;
+	outputs->steering_p_term = ctx->steering_controller.lastPTerm;
+	outputs->steering_i_term = ctx->steering_controller.lastITerm;
+	outputs->steering_d_term = ctx->steering_controller.lastDTerm;
 }
 
 void ethernet_thread(void *p)

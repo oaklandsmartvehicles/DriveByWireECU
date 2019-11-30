@@ -24,8 +24,17 @@ typedef struct EthernetInputs_t
 	//	0x1:	parking_brake_commanded 
 	//	0x2:	reverse_commanded
 	//	0x4:	autonomous mode 
+	//	0x8:	override_pid
 	uint8_t boolean_commands;	
 
+	//Decoding: RAW * 0.000001
+	//Range: ~ 0.000001 - 1000
+	uint32_t speed_p_gain;
+	uint32_t speed_i_gain;
+	uint32_t speed_d_gain;
+	uint32_t steering_p_gain;
+	uint32_t steering_i_gain;
+	uint32_t steering_d_gain;
 } EthernetInputs;
 
 //!!!WARNING!!! 
@@ -42,6 +51,15 @@ typedef struct EthernetOutputs_t
 	//Decoding:
 	//	0x1:	estop_state
 	uint8_t boolean_states;
+
+	//Decoding: value / 0.00001 (percent)
+	uint32_t speed_p_term;
+	uint32_t speed_i_term;
+	uint32_t speed_d_term;
+	uint32_t steering_p_term;
+	uint32_t steering_i_term;
+	uint32_t steering_d_term;
+
 } EthernetOutputs;
 
 void ethernet_thread(void *p);

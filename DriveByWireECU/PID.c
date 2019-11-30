@@ -196,7 +196,11 @@ void tick(PIDController *c) {
 		if(c->integralCumulation < -c->maxCumulation) c->integralCumulation = -c->maxCumulation;
 
 		// Calculate the system output based on data and PID gains.
-		c->output = (int) ((c->error * c->p) + (c->integralCumulation * c->i) + (c->cycleDerivative * c->d));
+		c->lastPTerm = (double)c->error * c->p;
+		c->lastITerm = (double)c->integralCumulation * c->i;
+		c->lastDTerm = (double)c->cycleDerivative * c->d;
+
+		c->output = (int) (c->lastPTerm + c->lastITerm + c->lastDTerm);
 
 		// Save a record of this iteration's data.
 		c->lastFeedback = c->currentFeedback;

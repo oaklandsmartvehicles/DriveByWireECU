@@ -21,6 +21,10 @@ typedef struct pid_controller {
 	int maxCumulation;
 	int cycleDerivative;
 
+	double lastPTerm;
+	double lastITerm;
+	double lastDTerm;
+
 	uint8_t inputBounded;
 	int inputLowerBound;
 	int inputUpperBound;

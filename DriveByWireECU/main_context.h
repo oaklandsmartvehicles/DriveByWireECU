@@ -41,6 +41,13 @@ typedef struct main_context_t
 	PIDController speed_controller;
 	float steering_torque_pid_out;
 	float acceleration_pid_out;
+	uint8_t override_pid;
+	float steer_p_gain_override;
+	float steer_i_gain_override;
+	float steer_d_gain_override;
+	float speed_p_gain_override;
+	float speed_i_gain_override;
+	float speed_d_gain_override;
 } main_context_t;
 
 #endif /* MAIN_CONTEXT_H_ */
