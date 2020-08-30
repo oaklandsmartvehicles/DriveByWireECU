@@ -125,6 +125,15 @@ void SetReverseDrive(int reverse)
 //Applies power to the steering motor as duty cycle percentage
 void SetSteeringTorque(float duty_cycle)
 {
+	if(duty_cycle < 0)
+		duty_cycle = 0;
+	else if (duty_cycle > 1.0)
+		duty_cycle = 1;
+	
+	duty_cycle = 1 - duty_cycle;
+	
+	duty_cycle = duty_cycle * 0.6;
+		
 	const static int STEERING_TORQUE_FREQ_TICKS = PWM_TICKS_PER_SECOND / STEERING_TORQUE_FREQ;
 	pwm_set_parameters(&PWM_SteeringTorque, STEERING_TORQUE_FREQ_TICKS, duty_cycle * STEERING_TORQUE_FREQ_TICKS);
 	pwm_enable(&PWM_SteeringTorque);
@@ -142,7 +151,7 @@ void SetSteeringTorque(float duty_cycle)
 
 //Sets the acceleration value to the specified duty cycle
 void SetAcceleration(float duty_cycle)
-{
+{	
 	const static int ACCELERATION_FREQ_TICKS = PWM_TICKS_PER_SECOND / ACCELERATION_FREQ;
 	pwm_set_parameters(&PWM_Acceleration, ACCELERATION_FREQ_TICKS, duty_cycle * ACCELERATION_FREQ_TICKS);
 	pwm_enable(&PWM_Acceleration);

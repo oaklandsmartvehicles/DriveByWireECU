@@ -36,6 +36,7 @@ typedef struct main_context_t
 	uint8_t pc_comm_active;
 	uint8_t debug_led_1;
 	uint8_t debug_led_2;
+	uint8_t tele_operation_enabled;
 
 	PIDController steering_controller;
 	PIDController speed_controller;

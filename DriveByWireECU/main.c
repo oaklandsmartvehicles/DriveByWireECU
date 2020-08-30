@@ -221,7 +221,60 @@ void ProcessAlgorithms(main_context_t* ctx)
 		SetReverseDrive(0);
 	}
 }
+uint32_t last_test_tick = 0;
+int tick_tock = 0;
+void TestSystems(main_context_t* ctx)
+{
+	if( ctx->current_time - last_test_tick > 2000)
+	{
+		last_test_tick = ctx->current_time;
+		tick_tock = !tick_tock;
+		
+		//alternate these signals
+		if(tick_tock)
+		{
+			SetAcceleration(0.40);
+			SetFrontBrake(0.0);
+			SetReverseDrive(0);
+			SetSteerDirection(0);
+		}
+		else
+		{
+			SetAcceleration(0.40);
+			SetReverseDrive(1);
+			SetFrontBrake(0.2);
+			SetSteerDirection(1);
+		}
+		SetSafetyLight1On(1);
+		SetSteeringTorque(0.40);
+	}
+	
+}
 
+void TeleOperation(main_context_t* ctx)
+{
+	if(ctx->tele_operation_enabled && ctx->current_time - ctx->last_eth_input_rx_time < 100)
+	{
+		SetSafetyLight1On(1);
+		SetAcceleration(ctx->vehicle_speed_commanded);
+		if(ctx->steering_angle_commanded > 0)
+		{
+			SetSteeringTorque(ctx->steering_angle_commanded);
+			SetSteerDirection(0);
+		}
+		else
+		{
+			SetSteeringTorque(ctx->steering_angle_commanded * -1);
+			SetSteerDirection(1);
+		}
+		
+	}
+	else
+	{
+		SetAcceleration(0.0);
+		SetSafetyLight1On(0);
+	}
+}
 
 void main_task(void* p)
 {
@@ -236,10 +289,12 @@ void main_task(void* p)
 		}
 		
 		context->current_time = GetCurrentTime();
-		ProcessCurrentInputs(context);
+		/*ProcessCurrentInputs(context);
 		ProcessAlgorithms(context);
-		ProcessCurrentOutputs(context);
-
+		ProcessCurrentOutputs(context);*/
+		//TestSystems(context);
+		TeleOperation(context);
+		
 		xSemaphoreGive(context->sem);
 		vTaskDelay(MAIN_TASK_LOOP_TIME);
 	}

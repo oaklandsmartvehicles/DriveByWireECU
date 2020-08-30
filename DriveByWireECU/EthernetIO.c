@@ -41,12 +41,13 @@ int InitializeLWIP()
 
 void decode_ethernet_inputs(EthernetInputs* inputs, main_context_t* ctx)
 {
-	ctx->steering_angle_commanded = (float)inputs->steering_angle_commanded * 0.1;
-	ctx->vehicle_speed_commanded = (float)inputs->vehicle_speed_commanded * 0.01;
+	ctx->steering_angle_commanded = (((float)inputs->steering_angle_commanded - (float)0x7FFF) /  (float)0x7FFF);
+	ctx->vehicle_speed_commanded = (float)inputs->vehicle_speed_commanded / (float)0xFFFF;
 	ctx->park_brake_commanded = (inputs->boolean_commands & 0x1) != 0;
 	ctx->reverse_commanded = (inputs->boolean_commands & 0x2) != 0;
 	ctx->autonomous_mode = (inputs->boolean_commands & 0x4) != 0;
 	ctx->override_pid = (inputs->boolean_commands & 0x8) != 0;
+	ctx->tele_operation_enabled = (inputs->boolean_commands & 0x10) != 0;
 	ctx->speed_p_gain_override = (float)inputs->speed_p_gain * 0.000001;
 	ctx->speed_i_gain_override = (float)inputs->speed_i_gain * 0.000001;
 	ctx->speed_d_gain_override = (float)inputs->speed_d_gain * 0.000001;
@@ -112,6 +113,7 @@ void ethernet_thread(void *p)
 		return;
 	}
 
+    uint8_t buffer[64];
 	while(1)
 	{
 		if( xSemaphoreTake(ctx->sem, 100) != pdTRUE)
@@ -123,10 +125,12 @@ void ethernet_thread(void *p)
 		encode_ethernet_outputs(&eth_outputs, ctx);
 
 		num_bytes_received = sendto(s_create, &eth_outputs, sizeof(eth_outputs), 0, &ra, sizeof(ra));
-
-		num_bytes_received = recv(s_create, &eth_inputs, sizeof(eth_inputs), MSG_DONTWAIT);
+	
+		num_bytes_received = recv(s_create, &buffer, sizeof(buffer), MSG_DONTWAIT);
+		
 		if(num_bytes_received > 0)
 		{
+			memcpy(&eth_inputs.boolean_commands, buffer, num_bytes_received);
 			ctx->last_eth_input_rx_time = xTaskGetTickCount();
 			decode_ethernet_inputs(&eth_inputs, ctx);
 		}
